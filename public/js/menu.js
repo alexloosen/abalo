@@ -1,3 +1,4 @@
+"use strict";
 class Menu{
     constructor(the_array){
         this._array = the_array;

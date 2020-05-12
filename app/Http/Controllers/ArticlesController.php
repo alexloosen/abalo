@@ -31,17 +31,6 @@ class ArticlesController extends Controller
     }
 
     public function create(){
-        /*$date = date("d-m-y H:i");
-        $id = DB::select('Select nextval(pg_get_serial_sequence(\'ab_article\', \'id\')) as new_id;');
-        DB::table('ab_article')->insert([
-            'id' => $id[0]->new_id,
-            'ab_name' => 'Honolulu',
-            'ab_price' => 300,
-            'ab_description' => 'Insel.',
-            'ab_creator_id' => 1,
-            'ab_createdate' => $date
-        ]);
-        dd('made it');*/
         if(is_numeric(\request()->ab_price) && is_numeric(\request()->ab_creator_id)){
             try {
                 $date = date("d-m-y H:i");

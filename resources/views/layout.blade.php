@@ -58,8 +58,8 @@
 </body>
 @yield('scripts')
 <script type="text/javascript" src="{{ url('/js/menu.js') }}"></script>
-<script type="text/javascript" src="{{ url('/js/article_creation.js') }}"></script>
-<script type="text/javascript" src="{{ url('cart_controll.js') }}"></script>
+<script type="text/javascript" src="{{ url('/js/api_article_creation.js') }}"></script>
+<script type="text/javascript" src="{{ url('/js/cart_controll.js') }}"></script>
 <script type="text/javascript" src="{{ url('/js/cookiecheck.js') }}"></script>
 
 

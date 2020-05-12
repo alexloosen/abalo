@@ -1,3 +1,4 @@
+"use strict";
 // Cookie Compliancy BEGIN
 function GetCookie(name) {
     var arg=name+"=";
