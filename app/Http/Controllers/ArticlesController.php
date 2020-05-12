@@ -14,7 +14,7 @@ class ArticlesController extends Controller
         parse_str($qstr,$params);
             $results = DB::select('select ab_article.id as id, ab_article.ab_name as ab_name, ab_price, ab_description, ab_createdate,
 	            ab_user.ab_name as ab_creator
-                from ab_article, ab_user 
+                from ab_article, ab_user
                 where ab_article.ab_name ~* ? and ab_article.ab_creator_id = ab_user.id;',[$params["search"]]);
         return view('articles',['article' => $results]);
     }
@@ -52,5 +52,11 @@ class ArticlesController extends Controller
         else{
             dd('no numeric!');
         }
+    }
+
+    public function all_api($value)
+    {
+        $result ['data'] = DB::select('select * from ab_article where ab_name ~* ?;', [$value]);
+        return response()->json($result);
     }
 }

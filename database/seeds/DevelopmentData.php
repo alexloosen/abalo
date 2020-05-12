@@ -14,7 +14,7 @@ class DevelopmentData extends Seeder
     {
         // ab_user befuellen
         // Datei öffnen, $handle ist der Dateizeiger
-        $handle = fopen('C:\Users\Irene\PhpstormProjects\abalo\database\seeds\user.csv', 'r',);
+        $handle = fopen('database\seeds\user.csv', 'r',);
         // erste Zeile nicht beachten
         fgetcsv($handle,100,';');
         // Datei zeilenweise auslesen, fgetcsv() anwenden, im Array $csv_array speichern
@@ -33,7 +33,7 @@ class DevelopmentData extends Seeder
 
         // ab_article befuellen
         // Datei öffnen, $handle ist der Dateizeiger
-        $handle = fopen('C:\Users\Irene\PhpstormProjects\abalo\database\seeds\articles.csv', 'r',);
+        $handle = fopen('database\seeds\articles.csv', 'r',);
         // erste Zeile nicht beachten
         fgetcsv($handle,500,';');
         // Datei zeilenweise auslesen, fgetcsv() anwenden, im Array $csv_array speichern
@@ -53,7 +53,7 @@ class DevelopmentData extends Seeder
         fclose($handle);
 
         // Datei öffnen, $handle ist der Dateizeiger
-        $handle = fopen('C:\Users\Irene\PhpstormProjects\abalo\database\seeds\articlecategory.csv', 'r',);
+        $handle = fopen('database\seeds\articlecategory.csv', 'r',);
         // erste Zeile nicht beachten
         fgetcsv($handle,100,';');
         // Datei zeilenweise auslesen, fgetcsv() anwenden, im Array $csv_array speichern
