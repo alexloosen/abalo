@@ -19,4 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/articles','ArticleAPIController@create_api');
-Route::delete('/articles','ArticleAPIController@delete_api');
+Route::delete('/articles/{id}','ArticleAPIController@delete_api');
