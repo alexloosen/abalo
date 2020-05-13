@@ -39,4 +39,19 @@ class ArticleAPIController extends Controller
             ]);
         }
     }
+
+    public function delete_api(){
+        $id = \request()->id;
+        return response()->json([
+            'you send me the id ' => $id
+        ]);
+/*
+        try{
+            DB::table('ab_article')->where('id','=',$id)->delete();
+        } catch (\Illuminate\Database\QueryException $exception) {
+            $errorInfo = $exception->errorInfo;
+            return response()->json(['answer' => 'article could not be deleted.']);
+        }
+        return response()->json(['answer' => 'article was deleted successfully!']);*/
+    }
 }

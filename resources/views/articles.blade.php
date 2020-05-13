@@ -27,6 +27,10 @@
                 <td>{{$a->ab_createdate}}</td>
                 <td style="text-align: center">{{$a->ab_price}}</td>
                 <td>{{$a->ab_description}}</td>
+                <td><form name="delete-request">
+                        <input type="hidden" value="{{$a->id}}" name="id">
+                        <button type="submit" class="btn btn-danger">delete</button>
+                    </form></td>
                 <td><button type="button" class="btn btn-primary" onclick="addToCart({{$a->id}})">+</button></td>
             </tr>
             @endforeach

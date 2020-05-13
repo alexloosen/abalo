@@ -96,6 +96,7 @@ if(document.getElementById("2") != null){
             // Define what happens on successful data submission
             XHR.addEventListener( "load", function(event) {
                 console.log('I\'ll show you the response text.');
+                console.log(event.target.responseText);
                 alert( event.target.responseText );
             } );
 

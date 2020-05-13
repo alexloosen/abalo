@@ -61,6 +61,7 @@
 <script type="text/javascript" src="{{ url('/js/api_article_creation.js') }}"></script>
 <script type="text/javascript" src="{{ url('/js/cart_controll.js') }}"></script>
 <script type="text/javascript" src="{{ url('/js/cookiecheck.js') }}"></script>
+<script type="text/javascript" src="{{ url('/js/api_article_delete.js') }}"></script>
 
 
 </html>
