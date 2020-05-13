@@ -18,8 +18,8 @@ class CreateAbShoppingcartTable extends Migration
             $table->unsignedTinyInteger('id',true);
             $table->tinyInteger('ab_creator_id');
             $table->timestamp('ab_createdate');
-        }
-        Schema::table('ab_article', function (Blueprint $table){
+        });
+        Schema::table('ab_shoppingcart', function (Blueprint $table){
             $table->foreign('ab_creator_id')->references('id')->on('ab_user')->cascadeOnDelete();
         });
     }

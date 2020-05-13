@@ -20,7 +20,7 @@ class CreateAbShoppingcartItemTable extends Migration
             $table->tinyInteger('ab_article_id');
             $table->timestamp('ab_createdate');
         });
-        Schema::table('ab_article', function (Blueprint $table){
+        Schema::table('ab_shoppingcart_item', function (Blueprint $table){
             $table->foreign('ab_shoppingcart_id')->references('id')->on('ab_shoppingcart')->cascadeOnDelete();
             $table->foreign('ab_article_id')->references('id')->on('ab_article')->cascadeOnDelete();
         });
