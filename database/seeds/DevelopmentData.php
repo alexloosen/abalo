@@ -52,6 +52,7 @@ class DevelopmentData extends Seeder
 // Datei schließen
         fclose($handle);
 
+// articlecategory befuellen
         // Datei öffnen, $handle ist der Dateizeiger
         $handle = fopen('database\seeds\articlecategory.csv', 'r',);
         // erste Zeile nicht beachten
@@ -67,6 +68,24 @@ class DevelopmentData extends Seeder
                 'id' => (int)$csv_array[0],
                 'ab_name' => $csv_array[1],
                 'ab_parent' => $value
+            ]);
+        }
+// Datei schließen
+        fclose($handle);
+
+
+// articlecategory befuellen
+        // Datei öffnen, $handle ist der Dateizeiger
+        $handle = fopen('database\seeds\article_has_articlecategory.csv', 'r',);
+        // erste Zeile nicht beachten
+        fgetcsv($handle,100,';');
+        // Datei zeilenweise auslesen, fgetcsv() anwenden, im Array $csv_array speichern
+        while (($csv_array = fgetcsv($handle,100,';')) !== FALSE) {
+            $id = DB::select('Select nextval(pg_get_serial_sequence(\'ab_article_has_articlecategory\', \'id\')) as new_id;');
+            DB::table('ab_article_has_articlecategory')->insert([
+                'id' => $id[0]->new_id,
+                'ab_articlecategory_id' => $csv_array[0],
+                'ab_article_id' => $csv_array[1]
             ]);
         }
 // Datei schließen
