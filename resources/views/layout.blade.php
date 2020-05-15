@@ -46,9 +46,6 @@
         <div class="row mt-1 mb-3">
             <div class="col p-1 m-2">
                 <p>Copyright</p>
-                <div id="app">
-                    <button v-on:click="handleIt">clickMe</button>
-                </div>
             </div>
         </div>
     </footer>
@@ -61,7 +58,7 @@
 
 </body>
 @yield('scripts')
-<script type="text/javascript" src="{{ url('/js/test.js') }}"></script>
+<script type="text/javascript" src="{{ url('/js/searchArticles.js') }}"></script>
 <script type="text/javascript" src="{{ url('/js/menu.js') }}"></script>
 <script type="text/javascript" src="{{ url('/js/api_article_creation.js') }}"></script>
 <script type="text/javascript" src="{{ url('/js/cart_controll.js') }}"></script>

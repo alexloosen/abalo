@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\DB;
 
 class ArticleAPIController extends Controller
 {
+    public function searchArticle($search)
+    {
+        $result ['data'] = DB::select('select * from ab_article where ab_name ~* ? limit 5;', [$search]);
+        return response()->json($result);
+    }
+
     public function create_api(){
         if(is_numeric(\request()->ab_price) && is_numeric(\request()->ab_creator_id) && \request()->ab_name != ""
         && \request()->ab_price > 0){

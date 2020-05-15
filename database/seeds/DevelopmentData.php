@@ -40,6 +40,8 @@ class DevelopmentData extends Seeder
         while (($csv_array = fgetcsv($handle,500,';')) !== FALSE) {
             // Daten des Arrays $csv_array in die korrekte Tabelle fügen
             $date = date_create_from_format('d.m.y H:i', $csv_array[5]);
+            // hier vielleicht später id richtig hochzählen (sequenz von postgres)
+            // die sequenz muss vor dem einlesen hochgezählt werden
             DB::table('ab_article')->insert([
                 'id' => (int)$csv_array[0],
                 'ab_name' => $csv_array[1],

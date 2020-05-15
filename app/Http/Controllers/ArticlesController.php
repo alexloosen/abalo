@@ -53,10 +53,4 @@ class ArticlesController extends Controller
             dd('no numeric!');
         }
     }
-
-    public function all_api($value)
-    {
-        $result ['data'] = DB::select('select * from ab_article where ab_name ~* ?;', [$value]);
-        return response()->json($result);
-    }
 }
