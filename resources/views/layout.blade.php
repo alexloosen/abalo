@@ -14,6 +14,7 @@
 
     <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     {{--not my stuff--}}
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -45,6 +46,9 @@
         <div class="row mt-1 mb-3">
             <div class="col p-1 m-2">
                 <p>Copyright</p>
+                <div id="app">
+                    <button v-on:click="handleIt">clickMe</button>
+                </div>
             </div>
         </div>
     </footer>
@@ -57,6 +61,7 @@
 
 </body>
 @yield('scripts')
+<script type="text/javascript" src="{{ url('/js/test.js') }}"></script>
 <script type="text/javascript" src="{{ url('/js/menu.js') }}"></script>
 <script type="text/javascript" src="{{ url('/js/api_article_creation.js') }}"></script>
 <script type="text/javascript" src="{{ url('/js/cart_controll.js') }}"></script>
