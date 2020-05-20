@@ -57,7 +57,7 @@
 </div>
 
 </body>
-@yield('scripts')
+
 <script type="text/javascript" src="{{ url('/js/searchArticles.js') }}"></script>
 <script type="text/javascript" src="{{ url('/js/menu.js') }}"></script>
 <script type="text/javascript" src="{{ url('/js/api_article_creation.js') }}"></script>

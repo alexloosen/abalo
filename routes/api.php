@@ -18,10 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('articles','ArticleAPIController@get_all');
 Route::get('articles/{search}', 'ArticleAPIController@searchArticle');
 Route::post('/articles','ArticleAPIController@create_api');
 Route::delete('/articles/{id}','ArticleAPIController@delete_api');
 
-Route::get('/shoppingcart','ArticleAPIController@make_cart');
-Route::post('/shoppingcart/{articleid}','ArticleAPIController@add_to_cart');
-Route::delete('/shoppingcart/{shoppingcartid}/articles/{articleid}', 'ArticleAPIController@remove_from_cart');
+Route::get('/shoppingcart','CartAPIController@make_cart');
+Route::post('/shoppingcart/{articleid}','CartAPIController@add_to_cart');
+Route::delete('/shoppingcart/{shoppingcartid}/articles/{articleid}', 'CartAPIController@remove_from_cart');

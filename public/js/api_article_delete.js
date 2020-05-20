@@ -1,4 +1,6 @@
 "use strict";
+
+// a simple xhr, which tries to delete an article...
 function deleteArticle(id){
     const XHR_2 = new XMLHttpRequest();
 
@@ -6,7 +8,7 @@ function deleteArticle(id){
     XHR_2.addEventListener( "load", function(event) {
         console.log('I\'ll show you the response text.');
         console.log(event.target.responseText);
-        //alert( event.target.responseText );
+        alert(event.target.responseText);
     } );
 
     // Define what happens in case of error
@@ -16,7 +18,7 @@ function deleteArticle(id){
 
     // Set up our request
     XHR_2.open( "DELETE", '/api/articles/' + id );
-    let str = 'Trying to send [\'id\' => ' + id + ']';
+    let str = 'Trying to send (delete) [\'id\' => ' + id + ']';
     console.log(str);
     XHR_2.send();
 }

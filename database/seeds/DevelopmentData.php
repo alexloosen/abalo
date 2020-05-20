@@ -36,12 +36,9 @@ class DevelopmentData extends Seeder
         $handle = fopen('database\seeds\articles.csv', 'r',);
         // erste Zeile nicht beachten
         fgetcsv($handle,500,';');
-        // Datei zeilenweise auslesen, fgetcsv() anwenden, im Array $csv_array speichern
         while (($csv_array = fgetcsv($handle,500,';')) !== FALSE) {
             // Daten des Arrays $csv_array in die korrekte Tabelle fügen
             $date = date_create_from_format('d.m.y H:i', $csv_array[5]);
-            // hier vielleicht später id richtig hochzählen (sequenz von postgres)
-            // die sequenz muss vor dem einlesen hochgezählt werden
             DB::table('ab_article')->insert([
                 'id' => (int)$csv_array[0],
                 'ab_name' => $csv_array[1],
@@ -50,9 +47,12 @@ class DevelopmentData extends Seeder
                 'ab_creator_id' => (int)$csv_array[4],
                 'ab_createdate' => $date
             ]);
+            // Hier den Sequenz-Parameter der Tabelle noch auf einen gewünschten Wert setzen!
+            DB::select('Select setval(pg_get_serial_sequence(\'ab_article\', \'id\'),31);');
         }
 // Datei schließen
         fclose($handle);
+        // Datei zeilenweise auslesen, fgetcsv() anwenden, im Array $csv_array speichern
 
 // articlecategory befuellen
         // Datei öffnen, $handle ist der Dateizeiger
@@ -76,7 +76,7 @@ class DevelopmentData extends Seeder
         fclose($handle);
 
 
-// articlecategory befuellen
+// article_has_articlecategory befuellen
         // Datei öffnen, $handle ist der Dateizeiger
         $handle = fopen('database\seeds\article_has_articlecategory.csv', 'r',);
         // erste Zeile nicht beachten
