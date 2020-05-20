@@ -82,6 +82,24 @@ if(document.getElementById("2") != null){
 
     //Eventlistener in JS, added to the site
     window.addEventListener( "load", function () {
+        // Access the form element... (if it is not present, this script will never run fully, of course)
+        const form = document.getElementById( "the_form" );
+
+        // ...and take over its submit event.
+        form.addEventListener( "submit", function ( event ) {
+            //now here user-input is validated!
+            if(validate()) {
+                // data will be send
+                console.log('I am about to send Data or to \'prevent default\'.');
+                event.preventDefault();
+                sendData();
+                console.log('Data was send!');
+            } else {
+                alert('Some of your input data is invalid!');
+            }
+        } );
+
+
         //for later
         function sendData() {
             const XHR = new XMLHttpRequest();
@@ -107,21 +125,6 @@ if(document.getElementById("2") != null){
             XHR.send( FD );
         }
 
-        // Access the form element... (if it is not present, this script will never run fully, of course)
-        const form = document.getElementById( "the_form" );
 
-        // ...and take over its submit event.
-        form.addEventListener( "submit", function ( event ) {
-            //now here user-input is validated!
-            if(validate()) {
-                // data will be send
-                console.log('I am about to send Data or to \'prevent default\'.');
-                event.preventDefault();
-                sendData();
-                console.log('Data was send!');
-            } else {
-                alert('Some of your input data is invalid!');
-            }
-        } );
     } );
 }
