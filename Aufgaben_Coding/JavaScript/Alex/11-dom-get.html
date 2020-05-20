@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Zweites JavaScript</title>
+</head>
+<body>
+	<h3 id="test">Zweites JavaScript</h3>
+	<script type="text/javascript">
+		"use strict";
+		console.log(document.getElementById('output'));
+		console.log(document.getElementById('test'));
+		console.log(document.getElementsByTagName('h3'));
+
+		let el = document.createElement('input');
+		el.setAttribute('type', 'input');
+		el.setAttribute('name', 'username');
+		el.setAttribute('maxLength', '80');
+		document.getElementById('test').append(el);
+	</script>
+	<p id="output">hier steht ein beispieltext</p>
+</body>
+</html>

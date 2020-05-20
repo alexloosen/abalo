@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Erstes Vue</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<script type="text/javascript">
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				msg: 'Hello World'
+			}
+		});
+		alert(vm.msg + "\n" + vm.msg.toUpperCase() + "\n" + vm.msg.toLowerCase());		
+		</script>
+	</div>
+</body>
+</html>

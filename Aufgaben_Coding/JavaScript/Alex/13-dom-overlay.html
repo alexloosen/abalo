@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Zweites JavaScript</title>
+</head>
+<body>
+	<h3 id="test">Zweites JavaScript</h3>
+	<script type="text/javascript">
+		"use strict";		
+		function getCookie(name)
+		{
+			var value = "; " + document.cookie;
+			var parts = value.split("; " + name + "=");
+			if (parts.length == 2) return parts.pop().split(";").shift();
+		}
+		let val = document.cookie;
+		if (val == "")
+		{
+			document.cookie = "username=1";
+		}
+		else
+		{
+			let counter = getCookie("username");
+			if (typeof counter === 'undefined')
+			{
+				counter = 1;
+			}
+			else
+			{
+				counter++;
+			}
+			document.cookie = "username=" + counter;
+		}
+		console.log(document.cookie);
+	</script>
+	<p id="output">hier steht ein beispieltext</p>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2-1-objekte</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+    // ein Objet mit JSON, Function, class erzeugen
+    // Objekt "car" nennen, mit Attr "name", "type" mit Getter und Setter und writeToConsole() implementieren
+    // "name=<name>","type=<type>"
+
+    //JSON
+    let Car  = {
+        name: 'Optimus',
+        type: 'Truck',
+        getName: function() {return this.name;},
+        setName: function(name) {this.name = name;},
+        getType: function() {return this.type;},
+        setType: function(type) {this.type = type;},
+        writeToConsole: function () {
+            console.log('\"name=' + this.name + '\",\"type=' + this.type + '\"');
+        }
+    };
+
+    Car.writeToConsole();
+    console.log(Car);
+
+    //Function
+    function Car_f(name,type){
+        this.name = name;
+        this.type = type;
+        this.getName = function(){return this.name;}
+        this.setName = function(name){this.name = name;}
+        this.getType = function(){return this.type;}
+        this.setType = function(type){this.type = type;}
+        this.writeToConsole = function(){
+            console.log('\"name=' + this.name + '\",\"type=' + this.type + '\"');
+        }
+    }
+
+    var f_car = new Car_f('Bumblebee','Musclecar');
+    f_car.writeToConsole();
+    console.log(f_car);
+
+    //Class
+    class Car_c{
+        constructor(name, type){
+            this._name = name;
+            this._type = type;
+        }
+
+        get type() {return this._type;}
+        get name() {return this._name;}
+        set type(type) {this._type = type;}
+        set name(name) {this._name = name;}
+
+        writeToConsole() {
+            console.log('\"name=' + this._name + '\",\"type=' + this._type + '\"');
+        }
+    }
+
+    var c_car = new Car_c('Knock Out','Sportscar');
+    c_car.writeToConsole();
+    console.log(c_car);
+
+</script>
+</html>

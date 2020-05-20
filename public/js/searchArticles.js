@@ -47,9 +47,3 @@ let vm = new Vue({
             }
         }}
 });
-
-function searchStuff(result){
-    vm.data.noSearch = false;
-
-
-}

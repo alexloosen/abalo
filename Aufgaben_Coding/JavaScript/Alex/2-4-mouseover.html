@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2-4-mouseover</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<body>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-2 p-5 align-self-center" id="1" onmouseover="to_green()" onmouseout="to_white()">
+        </div>
+    </div>
+</div>
+</body>
+</body>
+<script type="text/javascript">
+    function to_green() {
+        let my_elem = document.getElementById('1');
+        my_elem.setAttribute("style", "background-color: green;");
+    }
+    function to_white() {
+        let my_elem = document.getElementById('1');
+        my_elem.setAttribute("style", "background-color: white;");
+    }
+</script>
+</html>

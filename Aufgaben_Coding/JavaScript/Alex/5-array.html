@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Zweites JavaScript</title>
+</head>
+<body>
+	<h3>Zweites JavaScript</h3>
+	<script type="text/javascript">
+		"use strict";
+		let arr = ['erstes', 'zweites', 3, 4];
+		for (let i = 0; i < arr.length; i++)
+		{
+			console.log(i + ' => ' + arr[i]);
+		}
+		
+		arr.forEach (function(value, index)
+		{
+			console.log( index + ' => ' + value);
+		});
+		
+		let i = 0;
+		for (const el of arr)
+		{
+			console.log(i++, ' => ' + el);
+		}
+	</script>
+	<p id="output"></p>
+</body>
+</html>

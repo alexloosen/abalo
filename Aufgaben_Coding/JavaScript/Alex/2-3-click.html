@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2-3-click</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-2 p-5 align-self-center" id="1" style="background-color: red">
+            <button onclick="change()">Click me!</button>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    function change(){
+        let my_elem = document.getElementById('1');
+        if(my_elem.getAttribute("style") == "background-color: red;"){
+            my_elem.setAttribute("style","background-color: yellow;");
+        }   else if(my_elem.getAttribute("style") == "background-color: yellow;"){
+            my_elem.setAttribute("style","background-color: green;");
+        } else {
+            my_elem.setAttribute("style","background-color: red;");
+        }
+    }
+
+</script>
+</html>

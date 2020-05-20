@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Zweites JavaScript</title>
+</head>
+<body>
+	<h3>Zweites JavaScript</h3>
+	<script type="text/javascript">
+		"use strict";
+		function execFunction(fn, x, y)
+		{
+			return fn(x,y);
+		}
+		function multiply (x, y)
+		{
+			return x * y;
+		}
+		let z = execFunction(multiply, 2, 3);
+		console.log(z);
+	</script>
+	<p id="output"></p>
+</body>
+</html>

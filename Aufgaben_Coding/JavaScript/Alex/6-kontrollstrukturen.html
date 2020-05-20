@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Zweites JavaScript</title>
+</head>
+<body>
+	<h3>Zweites JavaScript</h3>
+	<script type="text/javascript">
+		"use strict";
+		function getRandomInt(max)
+		{
+			return Math.floor(Math.random() * Math.floor(max));
+		}
+		let i = getRandomInt(1);
+		if (i == 0)
+		{
+			console.log('i ist 0!');
+		}
+		else
+		{
+			console.log('i ist nicht 0');
+		}
+		switch (i)
+		{
+			case 0:
+				console.log('i ist 0!');
+				break;
+			case 1:
+				console.log('i ist nicht 0!');
+				break;
+			default:
+				break;
+		}
+		
+		while (i < 5)
+		{
+			console.log('i=' + i);
+			i++;
+		}
+		
+		for (let j = 0; j < 5; j++)
+		{
+			let x = i + j;
+			console.log( 'i + j = ' + x);
+		}
+	</script>
+	<p id="output"></p>
+</body>
+</html>

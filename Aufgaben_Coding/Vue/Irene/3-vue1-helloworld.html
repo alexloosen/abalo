@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta>
+<meta charset="UTF-8">
+<title>vue1</title>
+</meta>
+
+<body>
+
+<div id="hello-world-app">
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg | minimalize}}</h1>
+</div>
+
+<script
+    src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js">
+</script>
+
+<script>
+    Vue.filter('minimalize', function (value) {
+        if (!value) return ''
+        value = value.toString()
+        return value.toLowerCase()
+    })
+
+    new Vue({
+        el: "#hello-world-app",
+        data() {
+            return {
+                msg: "HELLO WORLD!"
+            }
+        }
+    }
+    );
+</script>
+
+</body>
+</html>

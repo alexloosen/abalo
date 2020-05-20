@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2-5-timeout</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-2 p-5 align-self-center" style="background-color: white;" id="1">
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    window.setInterval(function(){
+        let my_elem = document.getElementById('1');
+        if(my_elem.getAttribute("style") == "background-color: white;"){
+            my_elem.setAttribute("style", "background-color: red;");
+        } else {
+            my_elem.setAttribute("style", "background-color: white;");
+        }
+    }, 1000);
+</script>
+</html>

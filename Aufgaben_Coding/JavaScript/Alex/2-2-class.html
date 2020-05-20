@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2-2-class</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+    class User{
+        constructor(firstname, lastname){
+            this._firstname = firstname;
+            this._lastname = lastname;}
+        get firstname(){return this._firstname;}
+        set firstname(name){this._firstname = name;}
+        get lastname(){return this._lastname;}
+        set lastname(name){this._firstname = name;}
+    }
+
+    class Buyer extends User {
+        constructor(firstname, lastname){
+            super(firstname,lastname);
+            this._lastBuy = null;
+        }
+        get lastBuy(){return this._lastBuy;}
+        set lastBuy(object){this._lastBuy = object;}
+    }
+
+    let example = new Buyer('Eren','Yaeger');
+    console.log(example.firstname + ' ' + example.lastname + ' was created!');
+    example.lastBuy = 'Gunpowder';
+    console.log('He recently bought ' + example.lastBuy + '.');
+</script>
+</html>

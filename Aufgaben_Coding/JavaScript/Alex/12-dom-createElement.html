@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Zweites JavaScript</title>
+</head>
+<body>
+	<h3 id="test">Zweites JavaScript</h3>
+	<script type="text/javascript">
+		"use strict";
+		
+		let el = document.createElement("form");
+		let values = ["hund", "katze"];
+		let select = document.createElement("select");
+		select.name = "haustiere";
+		select.id = "haustiere";
+		
+		for (let val of values)
+		{
+			let option = document.createElement("option");
+			option.value = val;
+			option.text = val;
+			select.appendChild(option);
+		}
+		
+		el.append(select);
+		
+		document.getElementById('test').append(document.createElement("input"));
+		document.getElementById('test').append(el);
+	</script>
+	<p id="output">hier steht ein beispieltext</p>
+</body>
+</html>
