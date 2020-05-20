@@ -9,7 +9,8 @@ if (document.getElementById('search') != null){
         methods: {
             handleIt:function(event){
                 let searchTerm = event.target.value;
-                if (searchTerm.length > 3){
+                if (searchTerm.length > 3 ){
+                    // objects leeren, damit nicht die Ergebnisse mehrerer Suchanfragen aufgelistet werden
                     vm.objects = [];
                     const XHR_2 = new XMLHttpRequest();
 
