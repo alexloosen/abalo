@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Filter</title>
+    <script
+        src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js">
+    </script>
+</head>
+<body>
+    <div id="app" v-model="number">
+        {{number|euro}}
+    </div>
+</body>
+
+<script>
+    Vue.filter('euro', function(value){
+        let point = false;
+        if(value >= 1000)
+            point = true;
+        let str = value.toString();
+        str = str.replace('.',',');
+        if(point){
+            let index = str.indexOf(',') - 3;
+            if(str.indexOf(',') == -1)
+                index = str.length - 3;
+            let str1 = str.slice(0,index);
+            let str2 = str.slice(index);
+            str = str1 + '.' + str2;
+        }
+        return str;
+    })
+
+    new Vue({
+        el: '#app',
+        data: {
+            number: 234568.87
+        }
+    });
+</script>
+
+</html>

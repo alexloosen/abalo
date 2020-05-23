@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Component Pagination</title>
+    <script
+        src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js">
+    </script>
+</head>
+<body>
+    <div id ="app">
+        <pagination></pagination>
+    </div>
+</body>
+<script>
+    Vue.component('pagination',{
+        data: function () {
+            return {
+                count: 1
+            }
+        },
+        template: '<div><span v-on:click="pageBack"><</span>{{count}}<span v-on:click="pageForward">></span></div>',
+        methods: {
+            pageBack: function () {
+                if(this.$data.count > 1)
+                    this.$data.count--;
+            },
+            pageForward: function () {
+                if(this.$data.count < 10)
+                    this.$data.count++;
+            }
+        }
+    });
+    new Vue({
+        el: '#app'
+    });
+</script>
+</html>

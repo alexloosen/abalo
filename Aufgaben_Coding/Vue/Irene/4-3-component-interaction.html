@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Component Interaction</title>
+    <script
+        src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js">
+    </script>
+</head>
+<body>
+    <div id="app">
+        <parent-component></parent-component>
+    </div>
+</body>
+<script>
+    Vue.component('parent-component', {
+        template:
+            '<child-component v-on:somechildevent="handleChildEvent"></child-component>',
+        methods: {
+            handleChildEvent: function (data) {
+                console.log('Child event emitted: ' + data);
+            }
+        }
+    });
+    Vue.component('child-component', {
+        template: '<span v-on:click="doClick">I am the child component.</span>',
+        methods:{
+            doClick: function () {
+                this.$emit('somechildevent', 'my-data-fragment');
+            }
+        }
+    });
+    new Vue({
+        el: '#app'
+    });
+</script>
+</html>

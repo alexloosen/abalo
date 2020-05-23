@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Component</title>
+    <script
+        src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js">
+    </script>
+</head>
+<body>
+<div id="app">
+    <button-click-counters></button-click-counters>
+</div>
+</body>
+<script>
+    Vue.component('button-click-counters', {
+        data: function () {
+            return {
+                count: 1
+            }
+        },
+        methods:{
+            countDown: function(){
+                this.$data.count--;
+            }
+        },
+        template: '<div><button v-on:click="count++">Count Up! {{ count }}.</button>' +
+            '<br>'+
+            '<button v-on:click="countDown">You count down! Now at {{count}}.</button></div>'
+    });
+    new Vue({
+        el: '#app'
+    });
+</script>
+</html>
