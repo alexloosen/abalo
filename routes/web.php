@@ -34,3 +34,7 @@ Route::get('/articles{qstr}','ArticlesController@filter_articles')->name('filter
 
 Route::get('/sell','ArticlesController@sell')->name('sell');
 Route::post('/articles', 'ArticlesController@create')->name('create_article');
+
+Route::get('/newsite',function(){
+    return view('newsite');
+});
