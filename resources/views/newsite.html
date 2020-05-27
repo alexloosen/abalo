@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Abalo</title>
 
-    <script src="resources/js/require.js"></script>
+    <!--<script src="./js/require.js"></script>-->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -13,13 +13,80 @@
 
 </head>
 <div id="app">
-    <sitebody write="Hier kommt noch content hin!">
+    <sitebody write="start-text">
     </sitebody>
 </div>
 
 <script>
+    Vue.component('start-text', {
+        template: '<p>Hier ist content!</p>'
+    });
+
+    Vue.component('article-creation', {
+        methods: {
+            sendMe: function(emitted){
+                //validation time
+                if(this.$refs.ab_name.value == ""){
+                    alert("Bitte geben Sie Ihrem Artikel einen Titel!");
+                    return;
+                }
+                if(this.$refs.ab_price.value <= 0 || isNaN(parseInt(this.$refs.ab_price.value,10))){
+                    alert("Bitte weisen Sie Ihrem Artikel einen gültigen Preis (größer 0) zu!");
+                    return;
+                }
+                //validation successful
+                //make XHRequest
+                const XHR = new XMLHttpRequest();
+                XHR.open( "POST", '/api/articles' );
+                const fd = new FormData(emitted.target);
+                XHR.send(fd);
+                XHR.addEventListener( "load", function(event) {
+                    console.log('I\'ll show you the response text.');
+                    console.log(event.target.responseText);
+                    alert( event.target.responseText );
+                } );
+            }
+        },
+        template:
+            '<form v-on:submit.prevent="sendMe" id="the_form">' +
+            '<div class="form-group">' +
+            '<label for="name">Titel Ihres Artikels:</label>' +
+            '<input type="text" ref="ab_name" name="ab_name"></div>' +
+            '<div class="form-group">' +
+            '<label for="price">Preis in €:</label>' +
+            '<input type="text" ref="ab_price" name="ab_price"></div>' +
+            '<div class="form-group">' +
+            '<label for="description">Beschreibung:</label>' +
+            '<textarea ref="ab_description" name="ab_description"></textarea></div>' +
+            '<input type="hidden" value="1" ref="ab_creator_id" name="ab_creator_id">' +
+            '<button type="submit" class="btn btn-secondary" style="margin-left: 200px;">Anzeige aufgeben</button>' +
+            '</form>'
+    });
+
+    Vue.component('menu-component', {
+       template: '<div style="border: 2px solid darkgrey; padding: .25rem; margin: .5rem; margin-right: 0px;" class="col-md-auto">' +
+           '<ul><li><a v-on:click="goHome">Home</a></li>' +
+           '<li><a v-on:click="goKategorien">Kategorien</a></li>' +
+           '<li><a v-on:click="goVerkaufen">Verkaufen</a></li>' +
+           '<li><a href="#">Unternehmen</a>' +
+           '<ul><a href="#">Philosophie</a></ul>' +
+           '<ul><a href="#">Karriere</a></ul></li></ul>' +
+        '</div>',
+        methods: {
+           goHome: function(){
+               this.$emit('childevent', 'start-text')
+           },
+           goKategorien: function(){
+               this.$emit('childevent', 'start-text')
+           },
+            goVerkaufen: function () {
+                this.$emit('childevent', 'article-creation')
+            }
+        }
+    });
+
     Vue.component('impressum', {
-        template: '<h1 class="adsimple-321179911">Impressum</h1>\n' +
+        template: '<div><h1 class="adsimple-321179911">Impressum</h1>\n' +
             '<p class="adsimple-321179911">Informationspflicht laut § 5 TMG.</p>\n' +
             '<p class="adsimple-321179911">MusterFirma<br />Musterstrasse 1, Stiege 1 Tür 1, <br />12345 Musterhausen, <br />Deutschland</p>\n' +
             '<p class="adsimple-321179911">\n' +
@@ -70,7 +137,7 @@
             '<p>Wir haben diese Datenschutzerklärung (Fassung 24.05.2020-321179911) verfasst, um Ihnen gemäß der Vorgaben der <a class="adsimple-321179911" href="https://eur-lex.europa.eu/legal-content/DE/ALL/?uri=celex%3A32016R0679&amp;tid=321179911" target="_blank" rel="noopener">Datenschutz-Grundverordnung (EU) 2016/679</a> zu erklären, welche Informationen wir sammeln, wie wir Daten verwenden und welche Entscheidungsmöglichkeiten Sie als Besucher dieser Webseite haben.</p>\n' +
             '<p>Leider liegt es in der Natur der Sache, dass diese Erklärungen sehr technisch klingen, wir haben uns bei der Erstellung jedoch bemüht die wichtigsten Dinge so einfach und klar wie möglich zu beschreiben.</p>\n' +
             '<p style="margin-top:15px;">Quelle: Erstellt mit dem <a title="Datenschutz Generator Deutschland" href="https://www.adsimple.de/datenschutz-generator/" target="_blank" rel="follow" style="text-decoration:none;">Datenschutz Generator</a> von AdSimple in Kooperation mit <a href="https://www.hashtagmann.de" target="_blank" rel="follow" title="">hashtagmann.de</a>\n' +
-            '</p>'
+            '</p></div>'
     });
     Vue.component('siteheader',{
         template: '<header>\n' +
@@ -88,7 +155,7 @@
             '    </header>',
         methods: {
             menuHandling: function () {
-                alert('I would handle the Menu, if I could.');
+                this.$emit('menuevent', 'menu-component');
             }
         }
     });
@@ -102,32 +169,40 @@
             '    </footer>',
         methods: {
             goToImpressum: function () {
-                this.$emit('impressumevent', '<impressum></impressum>');
+                this.$emit('childevent', 'impressum');
             }
         }
     });
     Vue.component('sitebody',{
-        props: {
-            write: String,
+        data: function() {
+            return {
+                curComponent: 'start-text',
+                menuComponent: 'div',
+            }
         },
         template:'<body>\n' +
             '<div class="container" style="margin:0px; max-width: 100%;">' +
-            '<siteheader></siteheader>' +
+            '<siteheader v-on:menuevent="showMenu"></siteheader>' +
             '<div class="row mt-1 mb-1">\n' +
-            '        <div id="1"></div>\n' +
+            '        <component v-bind:is="menuComponent" v-on:childevent="showMe"></component>\n' +
             '        <div class="col p-1 m-2">\n' +
             // hier kommt der content hin
-            '{{write}}' +
+            '<component v-bind:is="curComponent" id="1"></component>' +
             //
             '        </div>\n' +
             '    </div>' +
-            '<sitefooter v-on:impressumevent="showImpressum"></sitefooter>' +
+            '<sitefooter v-on:childevent="showMe"></sitefooter>' +
             '</div>\n' +
             '</body>\n',
         methods: {
-            showImpressum: function (emitted) {
-                alert('I am here and ' + emitted);
-                this.$props.write = emitted;
+            showMe: function (emitted) {
+                this.curComponent = emitted;
+            },
+            showMenu: function(emitted){
+                if(this.menuComponent != emitted)
+                    this.menuComponent = emitted;
+                else
+                    this.menuComponent = 'div';
             }
         }
     });
