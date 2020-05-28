@@ -10,16 +10,116 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="/style.css">
     <link href="/fontawesome-free-5.11.2-web/css/all.css" rel="stylesheet">
+    <script type="text/x-template" id="for-articles">
+        <div>
+            <input type="text" v-on:keyup="handleIt">
+            <table style="width:100%">
+                <tr>
+                    <th>Title</th>
+                    <th style="width:10%">Creator</th>
+                    <th>Created at</th>
+                    <th style="width:5%">Price</th>
+                    <th>Description</th>
+                </tr>
+                <tr v-for="item in {objects}">
+                    <td>{{item.ab_name}}</td>
+                    <td>{{item.ab_creator_id}}</td>
+                    <td>{{item.ab_createdate}}</td>
+                    <td style="text-align: center">{{item.ab_price}}</td>
+                    <td>{{item.ab_description}}</td>
 
+                    <td><button type="button" class="btn btn-danger" v-on:click="deleteArticle(item.id)">delete</button></td>
+                    <td><button type="button" class="btn btn-primary" v-on:click="addToCart(item.id)">+</button></td>
+                </tr>
+            </table></div>
+    </script>
 </head>
 <div id="app">
-    <sitebody write="start-text">
+    <sitebody>
     </sitebody>
 </div>
-
 <script>
     Vue.component('start-text', {
         template: '<p>Hier ist content!</p>'
+    });
+    Vue.component('articles', {
+        template: '#for-articles',
+        data: function() {
+            return {
+                objects: [],
+                have_all_articles: false
+            }
+        },
+        created: function(){
+            var event = new Event('build');
+            this.handleIt(event);
+        },
+        methods: {
+            handleIt: function (event) {
+                function waitforreply(XHR){
+                    // Define what happens on successful data submission
+                    XHR.addEventListener( "load", function(event) {
+                        let result = event.target.responseText;
+                        let objs = JSON.parse(result).data;
+                        let tmp = [];
+                        for (let i = 0; i < objs.length; i++) {
+                            tmp.push({
+                                id: objs[i].id,
+                                ab_name: objs[i].ab_name,
+                                ab_price: objs[i].ab_price,
+                                ab_description: objs[i].ab_description,
+                                ab_creator_id: objs[i].ab_creator_id,
+                                ab_createdate: objs[i].ab_createdate,
+                            });
+                        }
+                        this.objects = tmp;
+                        console.log('In objects sind jetzt folgende Daten enthalten (und werden angezeigt):');
+                        console.log(this.objects);
+                    });
+                }
+                let searchTerm = "";
+                if(event.target != null)
+                    searchTerm = event.target.value;
+                const XHR = new XMLHttpRequest();
+                if (searchTerm.length > 3 ) {
+                    // objects leeren, damit nicht die Ergebnisse mehrerer Suchanfragen aufgelistet werden
+                    this.have_all_articles = false;
+                    this.objects = [];
+                    // Set up our request
+                    XHR.open("GET", '/api/articles/' + searchTerm);
+                    let str_2 = 'Trying to send [\'search_term\' => ' + searchTerm + ']';
+                    console.log(str_2);
+                    XHR.send();
+                    waitforreply(XHR);
+                } else {
+                    if(!this.have_all_articles){
+                        XHR.open( "GET", '/api/articles' );
+                        let str = 'Trying to get all articles!';
+                        console.log(str);
+                        XHR.send();
+                        this.have_all_articles = true;
+                        waitforreply(XHR);
+                    }
+                }
+            },
+            deleteArticle: function (id){
+                const XHR = new XMLHttpRequest();
+                // Set up our request
+                XHR.open( "DELETE", '/api/articles/' + id );
+                let str = 'Trying to send (delete) [\'id\' => ' + id + ']';
+                console.log(str);
+                XHR.send();
+                // Define what happens on successful data submission
+                XHR.addEventListener( "load", function(event) {
+                    console.log('I\'ll show you the response text.');
+                    console.log(event.target.responseText);
+                    alert(event.target.responseText);
+                } );
+            },
+            addToCart: function (id) {
+                alert('I (' + id + ') would be added to the cart, if there was one.');
+            }
+        }
     });
 
     Vue.component('article-creation', {
@@ -64,21 +164,21 @@
     });
 
     Vue.component('menu-component', {
-       template: '<div style="border: 2px solid darkgrey; padding: .25rem; margin: .5rem; margin-right: 0px;" class="col-md-auto">' +
-           '<ul><li><a v-on:click="goHome">Home</a></li>' +
-           '<li><a v-on:click="goKategorien">Kategorien</a></li>' +
-           '<li><a v-on:click="goVerkaufen">Verkaufen</a></li>' +
-           '<li><a href="#">Unternehmen</a>' +
-           '<ul><a href="#">Philosophie</a></ul>' +
-           '<ul><a href="#">Karriere</a></ul></li></ul>' +
-        '</div>',
+        template: '<div style="border: 2px solid darkgrey; padding: .25rem; margin: .5rem; margin-right: 0px;" class="col-md-auto">' +
+            '<ul><li><a v-on:click="goHome">Home</a></li>' +
+            '<li><a v-on:click="goKategorien">Kategorien</a></li>' +
+            '<li><a v-on:click="goVerkaufen">Verkaufen</a></li>' +
+            '<li><a href="#">Unternehmen</a>' +
+            '<ul><a href="#">Philosophie</a></ul>' +
+            '<ul><a href="#">Karriere</a></ul></li></ul>' +
+            '</div>',
         methods: {
-           goHome: function(){
-               this.$emit('childevent', 'start-text')
-           },
-           goKategorien: function(){
-               this.$emit('childevent', 'start-text')
-           },
+            goHome: function(){
+                this.$emit('childevent', 'start-text')
+            },
+            goKategorien: function(){
+                this.$emit('childevent', 'articles')
+            },
             goVerkaufen: function () {
                 this.$emit('childevent', 'article-creation')
             }
