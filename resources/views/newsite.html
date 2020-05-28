@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="/style.css">
     <link href="/fontawesome-free-5.11.2-web/css/all.css" rel="stylesheet">
+    <!-- nur zum Test!!-->
+    <script src="public/js/app.js"></script>
 
 </head>
 <div id="app">
@@ -64,7 +66,7 @@
     });
 
     Vue.component('menu-component', {
-       template: '<div style="border: 2px solid darkgrey; padding: .25rem; margin: .5rem; margin-right: 0px;" class="col-md-auto">' +
+       template: '<div style="border: 2px solid darkgrey; padding: .5rem; margin: .5rem; margin-right: 0px;" class="col-md-1 menu">' +
            '<ul><li><a v-on:click="goHome">Home</a></li>' +
            '<li><a v-on:click="goKategorien">Kategorien</a></li>' +
            '<li><a v-on:click="goVerkaufen">Verkaufen</a></li>' +
@@ -144,7 +146,7 @@
             '        <div class="row mt-3 mb-1">\n' +
             '            <div class="col p-1 m-2">\n' +
             '                <div class="row align-items-center">\n' +
-            '                    <div class="col-md-auto ml-2"><button v-on:click="menuHandling"><i class="fas fa-bars" style="align-self: center; font-size:3rem; color:dimgray;"></i></button></div>\n' +
+            '                    <div class="col-md-auto ml-2"><button v-on:click="menuHandling"><i class="fas fa-bars" style="align-self: center; font-size:3rem; color:#08b1a9;"></i></button></div>\n' +
             '                    <div class="col">\n' +
             '                        <h1>Abalo</h1>\n' +
             '                        <p>Das ist unser Slogan.</p>\n' +

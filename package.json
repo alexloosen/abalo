@@ -1,6 +1,7 @@
 {
     "private": true,
     "scripts": {
+        "test": "public/js/menu.js",
         "dev": "npm run development",
         "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "watch": "npm run development -- --watch",
@@ -16,10 +17,14 @@
         "lodash": "^4.17.13",
         "resolve-url-loader": "^3.1.0",
         "sass": "^1.15.2",
-        "sass-loader": "^8.0.0"
+        "sass-loader": "^8.0.0",
+        "vue-template-compiler": "^2.6.11",
+        "bootstrap": "^4.5.0",
+        "popper.js": "^1.16.1"
     },
     "dependencies": {
         "jquery": "^3.5.1",
-        "vue": "^2.6.11"
+        "vue": "^2.6.11",
+        "vue-good-table": "^2.19.3"
     }
 }
