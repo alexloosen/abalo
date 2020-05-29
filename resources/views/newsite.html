@@ -6,7 +6,7 @@
 
     <!--<script src="./js/require.js"></script>-->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
+    <!--<script src="/index.js" type="module"></script>-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="/style.css">
     <link href="/fontawesome-free-5.11.2-web/css/all.css" rel="stylesheet">
@@ -21,7 +21,7 @@
                     <th style="width:5%">Price</th>
                     <th>Description</th>
                 </tr>
-                <tr v-for="item in {objects}">
+                <tr v-for="item in objects">
                     <td>{{item.ab_name}}</td>
                     <td>{{item.ab_creator_id}}</td>
                     <td>{{item.ab_createdate}}</td>
@@ -42,6 +42,8 @@
     Vue.component('start-text', {
         template: '<p>Hier ist content!</p>'
     });
+
+
     Vue.component('articles', {
         template: '#for-articles',
         data: function() {
@@ -56,14 +58,23 @@
         },
         methods: {
             handleIt: function (event) {
-                function waitforreply(XHR){
-                    // Define what happens on successful data submission
-                    XHR.addEventListener( "load", function(event) {
-                        let result = event.target.responseText;
+                let searchTerm = "";
+                if(event.target != null)
+                    searchTerm = event.target.value;
+                const XHR = new XMLHttpRequest();
+                if (searchTerm.length > 3 ) {
+                    // objects leeren, damit nicht die Ergebnisse mehrerer Suchanfragen aufgelistet werden
+                    this.have_all_articles = false;
+                    this.$data.objects = [];
+                    // Set up our request
+                    XHR.open("GET", '/api/articles/' + searchTerm);
+                    let str_2 = 'Trying to send [\'search_term\' => ' + searchTerm + ']';
+                    console.log(str_2);
+                    XHR.onload =  () => {
+                        let result = XHR.response;
                         let objs = JSON.parse(result).data;
-                        let tmp = [];
                         for (let i = 0; i < objs.length; i++) {
-                            tmp.push({
+                            this.objects.push({
                                 id: objs[i].id,
                                 ab_name: objs[i].ab_name,
                                 ab_price: objs[i].ab_price,
@@ -72,33 +83,39 @@
                                 ab_createdate: objs[i].ab_createdate,
                             });
                         }
-                        this.objects = tmp;
-                        console.log('In objects sind jetzt folgende Daten enthalten (und werden angezeigt):');
-                        console.log(this.objects);
-                    });
-                }
-                let searchTerm = "";
-                if(event.target != null)
-                    searchTerm = event.target.value;
-                const XHR = new XMLHttpRequest();
-                if (searchTerm.length > 3 ) {
-                    // objects leeren, damit nicht die Ergebnisse mehrerer Suchanfragen aufgelistet werden
-                    this.have_all_articles = false;
-                    this.objects = [];
-                    // Set up our request
-                    XHR.open("GET", '/api/articles/' + searchTerm);
-                    let str_2 = 'Trying to send [\'search_term\' => ' + searchTerm + ']';
-                    console.log(str_2);
+                    }
                     XHR.send();
-                    waitforreply(XHR);
+                    // Define what happens on successful data submission
+
+                    console.log(this.objects);
                 } else {
                     if(!this.have_all_articles){
                         XHR.open( "GET", '/api/articles' );
                         let str = 'Trying to get all articles!';
                         console.log(str);
+                        XHR.onload = () => {
+                            if(XHR.status === 200){
+                                // Do something with data
+                                let result = XHR.response;
+                                let objs = JSON.parse(result).data;
+                                for (let i = 0; i < objs.length; i++) {
+                                    this.objects.push({
+                                        id: objs[i].id,
+                                        ab_name: objs[i].ab_name,
+                                        ab_price: objs[i].ab_price,
+                                        ab_description: objs[i].ab_description,
+                                        ab_creator_id: objs[i].ab_creator_id,
+                                        ab_createdate: objs[i].ab_createdate,
+                                    });
+                                }
+                            }else{
+                                // Show error message
+                            }
+                        }
                         XHR.send();
                         this.have_all_articles = true;
-                        waitforreply(XHR);
+
+                        console.log(this.objects);
                     }
                 }
             },
@@ -121,6 +138,12 @@
             }
         }
     });
+
+
+
+
+
+
 
     Vue.component('article-creation', {
         methods: {
@@ -170,7 +193,7 @@
             '<li><a v-on:click="goVerkaufen">Verkaufen</a></li>' +
             '<li><a href="#">Unternehmen</a>' +
             '<ul><a href="#">Philosophie</a></ul>' +
-            '<ul><a href="#">Karriere</a></ul></li></ul>' +
+            '<ul><a v-on:click="goComp">Karriere</a></ul></li></ul>' +
             '</div>',
         methods: {
             goHome: function(){
@@ -181,6 +204,9 @@
             },
             goVerkaufen: function () {
                 this.$emit('childevent', 'article-creation')
+            },
+            goComp: function (){
+                this.$emit('childevent','example-component')
             }
         }
     });
@@ -306,6 +332,7 @@
             }
         }
     });
+
     new Vue ({
         el: '#app'
     });
