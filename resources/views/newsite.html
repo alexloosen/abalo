@@ -90,6 +90,7 @@
                     console.log(this.objects);
                 } else {
                     if(!this.have_all_articles){
+                        this.$data.objects = [];
                         XHR.open( "GET", '/api/articles' );
                         let str = 'Trying to get all articles!';
                         console.log(str);
