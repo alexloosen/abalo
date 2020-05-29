@@ -29,8 +29,8 @@
                 <td style="text-align: center">@{{item.ab_price}}</td>
                 <td>@{{item.ab_description}}</td>
 
-                <td><button type="button" class="btn btn-danger" v-on:click="deleteArticle(item.id)">delete</button></td>
-                <td><button type="button" class="btn btn-primary" v-on:click="addToCart(item.id)">+</button></td>
+                <td><button type="button" class="btn btn-danger" v-on:click="deleteArticle(item.id)">Delete Article</button></td>
+                <td><button type="button" class="btn btn-primary" v-on:click="addToCart(item.id)">Add to Cart</button></td>
 
             </tr>
         </table>
