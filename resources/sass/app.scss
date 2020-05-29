@@ -11,17 +11,21 @@ $fh-color: #08b1a9;
 }
 
 .btn{
-	&-primary{
+    white-space: nowrap;
+    &-primary{
 		background-color: $fh-color;
 	}
 	&-secondary{
 		background-color: $fh-color;
 	}
+	&-danger{
+		background-color: #c93836;
+	}
 }
 
 a {
     color: inherit;
-	
+
 	&:hover {
 		color: inherit !important;
 		font-style: normal !important;
@@ -34,7 +38,7 @@ a {
 table {
 	th{
 		border-bottom: 2px solid black;
-		border-right: 2px solid black;	
+		border-right: 2px solid black;
 	}
 	th:last-child {
 		border-right: none;
@@ -82,11 +86,11 @@ form {
     text-align: center;
     font-size: 15px;
     font-weight: bold;
-	
+
 	div {
 		padding: 5px 0 0;
 	}
-	
+
 	a {
 		color: #ffba55;
 		display: inline-block;
@@ -95,7 +99,7 @@ form {
 		&:hover {
 			color: #fda016;
 		}
-	}	
+	}
 	a#cookieButton {
 		display: inline-block;
 		color: #000000;

@@ -8,11 +8,17 @@
   border: none;
 }
 
+.btn {
+  white-space: nowrap;
+}
 .btn-primary {
   background-color: #08b1a9;
 }
 .btn-secondary {
   background-color: #08b1a9;
+}
+.btn-danger {
+  background-color: #c93836;
 }
 
 a {
