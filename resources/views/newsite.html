@@ -5,8 +5,9 @@
     <title>Abalo</title>
 
     <!--<script src="./js/require.js"></script>-->
-    <script src="/js/app.js"></script>
+    <!--<script src="/js/app.js"></script>-->
     <!--<script src="/index.js" type="module"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="/style.css">
     <link href="/fontawesome-free-5.11.2-web/css/all.css" rel="stylesheet">
@@ -31,7 +32,9 @@
                     <td><button type="button" class="btn btn-danger" v-on:click="deleteArticle(item.id)">Delete Article</button></td>
                     <td><button type="button" class="btn btn-primary" v-on:click="addToCart(item.id)">Add to Cart</button></td>
                 </tr>
-            </table></div>
+            </table>
+            <pagination :pages="parentpages" v-on:pageevent="queryDB"></pagination>
+        </div>
     </script>
 </head>
 <div id="app">
@@ -43,13 +46,38 @@
         template: '<p>Hier ist content!</p>'
     });
 
+    Vue.component('pagination',{
+        props: ['pages'],
+        data: function () {
+            return {
+                curPage: 1
+            }
+        },
+        template: '<div><span v-on:click="pageBack"><</span>{{curPage}}<span v-on:click="pageForward">></span></div>',
+        methods: {
+            pageBack: function () {
+                if(this.curPage > 1){
+                    this.curPage--;
+                    this.$emit('pageevent', (this.curPage - 1)*5);
+                }
+            },
+            pageForward: function () {
+                if(this.curPage < this.$props.pages){
+                    this.curPage++;
+                    this.$emit('pageevent', (this.curPage - 1)*5);
+                }
+            }
+        }
+    });
 
     Vue.component('articles', {
         template: '#for-articles',
         data: function() {
             return {
+                parentpages: 5,
                 objects: [],
-                have_all_articles: false
+                have_all_articles: false,
+                searchTerm: ""
             }
         },
         created: function(){
@@ -58,17 +86,56 @@
         },
         methods: {
             handleIt: function (event) {
-                let searchTerm = "";
                 if(event.target != null)
-                    searchTerm = event.target.value;
+                    this.searchTerm = event.target.value;
                 const XHR = new XMLHttpRequest();
-                if (searchTerm.length > 3 ) {
-                    // objects leeren, damit nicht die Ergebnisse mehrerer Suchanfragen aufgelistet werden
+                if (this.searchTerm.length > 3 ) {
                     this.have_all_articles = false;
-                    this.$data.objects = [];
+                    console.log('Trying to get count of searched articles.');
+                    XHR.open( "GET", '/api/articles/' + this.searchTerm );
+                    XHR.onload = () => {
+                        if(XHR.status === 200){
+                            let result = XHR.response;
+                            let tmp = JSON.parse(result).num[0].count;
+                            this.parentpages = Math.ceil(tmp/5);
+                            console.log('In function for searched articles pages was:' + this.parentpages);
+                        }
+                        else{
+                            console.log('Could not querry DB.');
+                        }
+                    }
+                    XHR.send();
+                    console.log('searchTerm is ' + this.searchTerm);
+                    this.queryDB(0);
+                } else {
+                    if(!this.have_all_articles){
+                        this.have_all_articles = true;
+                        console.log('Trying to get count for all articles.');
+                        XHR.open( "GET", '/api/articles' );
+                        XHR.onload = () => {
+                            if(XHR.status === 200){
+                                // Do something with data
+                                let result = XHR.response;
+                                let tmp = JSON.parse(result).num[0].count;
+                                this.parentpages = Math.ceil(tmp/5);
+                                console.log('In function pages was:' + this.parentpages);
+                                }
+                            else{
+                                console.log('Could not querry DB.');
+                            }
+                        }
+                        XHR.send();
+                        this.queryDB(0);
+                    }
+                }
+            },
+            queryDB: function (emitted){
+                if(this.searchTerm.length > 3){
+                    // objects leeren, damit nicht die Ergebnisse mehrerer Suchanfragen aufgelistet werden
+                    this.objects = [];
                     // Set up our request
-                    XHR.open("GET", '/api/articles/' + searchTerm);
-                    let str_2 = 'Trying to send [\'search_term\' => ' + searchTerm + ']';
+                    XHR.open("GET", '/api/articles/' + this.searchTerm + '/' + emitted);
+                    let str_2 = 'Trying to get a page for [\'search_term\' => ' + this.searchTerm + ']';
                     console.log(str_2);
                     XHR.onload =  () => {
                         let result = XHR.response;
@@ -85,39 +152,32 @@
                         }
                     }
                     XHR.send();
-                    // Define what happens on successful data submission
-
                     console.log(this.objects);
-                } else {
-                    if(!this.have_all_articles){
-                        this.$data.objects = [];
-                        XHR.open( "GET", '/api/articles' );
-                        let str = 'Trying to get all articles!';
-                        console.log(str);
-                        XHR.onload = () => {
-                            if(XHR.status === 200){
-                                // Do something with data
-                                let result = XHR.response;
-                                let objs = JSON.parse(result).data;
-                                for (let i = 0; i < objs.length; i++) {
-                                    this.objects.push({
-                                        id: objs[i].id,
-                                        ab_name: objs[i].ab_name,
-                                        ab_price: objs[i].ab_price,
-                                        ab_description: objs[i].ab_description,
-                                        ab_creator_id: objs[i].ab_creator_id,
-                                        ab_createdate: objs[i].ab_createdate,
-                                    });
-                                }
-                            }else{
-                                // Show error message
-                            }
+                }
+                else{
+                    XHR = new XMLHttpRequest();
+                    // objects leeren, damit nicht die Ergebnisse mehrerer Suchanfragen aufgelistet werden
+                    this.objects = [];
+                    // Set up our request
+                    XHR.open("GET", '/api/articlespage/' + emitted);
+                    let str_2 = 'Trying to get page of all articles';
+                    console.log(str_2);
+                    XHR.onload =  () => {
+                        let result = XHR.response;
+                        let objs = JSON.parse(result).data;
+                        for (let i = 0; i < objs.length; i++) {
+                            this.objects.push({
+                                id: objs[i].id,
+                                ab_name: objs[i].ab_name,
+                                ab_price: objs[i].ab_price,
+                                ab_description: objs[i].ab_description,
+                                ab_creator_id: objs[i].ab_creator_id,
+                                ab_createdate: objs[i].ab_createdate,
+                            });
                         }
-                        XHR.send();
-                        this.have_all_articles = true;
-
-                        console.log(this.objects);
                     }
+                    XHR.send();
+                    console.log(this.objects);
                 }
             },
             deleteArticle: function (id){
@@ -139,12 +199,6 @@
             }
         }
     });
-
-
-
-
-
-
 
     Vue.component('article-creation', {
         methods: {

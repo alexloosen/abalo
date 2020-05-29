@@ -12,13 +12,23 @@ class ArticleAPIController extends Controller
     // für die dynamische/interaktive Artikelsuche
     public function searchArticle($search)
     {
-        $result ['data'] = DB::select('select * from ab_article where ab_name ~* ? limit 5;', [$search]);
+        $result ['num'] = DB::select('select count(*) from ab_article where ab_name ~* ?', [$search]);
+        return response()->json($result);
+    }
+
+    public function searchArticlePage($search, $offset){
+        $result ['data'] = DB::select('select * from ab_article where ab_name ~* ? limit 5 offset ?;', [$search, $offset]);
+        return response()->json($result);
+    }
+
+    public function get_count(){
+        $result ['num'] = DB::select('select count(*) from ab_article;');
         return response()->json($result);
     }
 
     //zum Anzeigen ALLER Artikel
-    public function get_all(){
-        $result ['data'] = DB::select('select * from ab_article;');
+    public function get_all_page($offset){
+        $result ['data'] = DB::select('select * from ab_article limit 5 offset ?;', [$offset]);
         return response()->json($result);
     }
 
