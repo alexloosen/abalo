@@ -24,7 +24,9 @@
     },
     "dependencies": {
         "jquery": "^3.5.1",
+        "popper": "^1.0.1",
         "vue": "^2.6.11",
-        "vue-good-table": "^2.19.3"
+        "vue-good-table": "^2.19.3",
+        "vue-scroll-up": "^1.0.3"
     }
 }
