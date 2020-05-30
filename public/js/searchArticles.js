@@ -2,6 +2,7 @@
 if (document.getElementById('search') != null){
     const XHR_3 = new XMLHttpRequest();
 
+
 // Define what happens on successful data submission
     XHR_3.addEventListener( "load", function(event) {
         console.log('I\'ll show you the response text to your articles request.');
