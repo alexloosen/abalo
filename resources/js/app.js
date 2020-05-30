@@ -41,3 +41,4 @@ export default {
 const app = new Vue({
     el: '#app',
 });
+
