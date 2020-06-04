@@ -34,7 +34,7 @@
                     <td><button type="button" class="btn btn-primary" v-on:click="addToCart(item.id)">Add to Cart</button></td>
                 </tr>
             </table>
-            <pagination :pages="parentpages" v-on:pageevent="queryDB"></pagination>
+            <pagination class="pageArrow" :pages="parentpages" v-on:pageevent="queryDB"></pagination>
         </div>
     </script>
 
