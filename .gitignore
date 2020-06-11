@@ -1,5 +1,4 @@
 node_modules/
 .idea/
-.env
 vendor/
 public/css/output.css
