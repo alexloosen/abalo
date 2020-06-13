@@ -25,8 +25,4 @@ Route::get('articles/{search}', 'ArticleAPIController@searchArticle');
 Route::post('/articles','ArticleAPIController@create_api');
 Route::delete('/articles/{id}','ArticleAPIController@delete_api');
 
-Route::get('/shoppingcart','CartAPIController@make_cart');
-Route::post('/shoppingcart/{articleid}','CartAPIController@add_to_cart');
-Route::delete('/shoppingcart/{shoppingcartid}/articles/{articleid}', 'CartAPIController@remove_from_cart');
-
 Route::get('/newsite', 'ArticleNewsiteController@get_all_count');

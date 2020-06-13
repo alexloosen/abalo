@@ -12,31 +12,6 @@
     <link rel="stylesheet" href="/style.css">
     <link href="/fontawesome-free-5.11.2-web/css/all.css" rel="stylesheet">
 
-    <script src="/js/newsite/articles_template.html" type="text/x-template" id="for-articles">
-        <div>
-            <input type="text" v-on:keyup="handleIt">
-            <table style="width:100%">
-                <tr>
-                    <th>Title</th>
-                    <th style="width:10%">Creator</th>
-                    <th>Created at</th>
-                    <th style="width:5%">Price</th>
-                    <th>Description</th>
-                </tr>
-                <tr v-for="item in objects">
-                    <td>{{item.ab_name}}</td>
-                    <td>{{item.ab_creator_id}}</td>
-                    <td>{{item.ab_createdate}}</td>
-                    <td style="text-align: center">{{item.ab_price}}</td>
-                    <td>{{item.ab_description}}</td>
-
-                    <td><button type="button" class="btn btn-danger" v-on:click="deleteArticle(item.id)">Delete Article</button></td>
-                    <td><button type="button" class="btn btn-primary" v-on:click="addToCart(item.id)">Add to Cart</button></td>
-                </tr>
-            </table>
-            <pagination class="pageArrow" :pages="parentpages" v-on:pageevent="queryDB"></pagination>
-        </div>
-    </script>
 
 </head>
 <div id="app">
@@ -52,41 +27,9 @@
 <script src="/js/newsite/sitefooter.js"></script>
 <script src="/js/newsite/pagination.js"></script>
 <script src="/js/newsite/articles.js"></script>
-<script>
-    Vue.component('sitebody',{
-        data: function() {
-            return {
-                curComponent: 'start-text',
-                menuComponent: 'div',
-            }
-        },
-        template:'<body>\n' +
-            '<div class="container" style="margin:0px; max-width: 100%;">' +
-            '<siteheader v-on:menuevent="showMenu"></siteheader>' +
-            '<div class="row mt-1 mb-1">\n' +
-            '        <component v-bind:is="menuComponent" v-on:childevent="showMe"></component>\n' +
-            '        <div class="col p-1 m-2">\n' +
-            // hier kommt der content hin
-            '<component v-bind:is="curComponent" id="1"></component>' +
-            //
-            '        </div>\n' +
-            '    </div>' +
-            '<sitefooter v-on:childevent="showMe"></sitefooter>' +
-            '</div>\n' +
-            '</body>\n',
-        methods: {
-            showMe: function (emitted) {
-                this.curComponent = emitted;
-            },
-            showMenu: function(emitted){
-                if(this.menuComponent != emitted)
-                    this.menuComponent = emitted;
-                else
-                    this.menuComponent = 'div';
-            }
-        }
-    });
+<script src="/js/newsite/sitebody.js"></script>
 
+<script>
     new Vue ({
         el: '#app'
     });

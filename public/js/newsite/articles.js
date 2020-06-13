@@ -1,5 +1,27 @@
 Vue.component('articles', {
-    template: '#for-articles',
+    template: '<div>\n' +
+        '            <input type="text" v-on:keyup="handleIt">\n' +
+        '            <table style="width:100%">\n' +
+        '                <tr>\n' +
+        '                    <th>Title</th>\n' +
+        '                    <th style="width:10%">Creator</th>\n' +
+        '                    <th>Created at</th>\n' +
+        '                    <th style="width:5%">Price</th>\n' +
+        '                    <th>Description</th>\n' +
+        '                </tr>\n' +
+        '                <tr v-for="item in objects">\n' +
+        '                    <td>{{item.ab_name}}</td>\n' +
+        '                    <td>{{item.ab_creator_id}}</td>\n' +
+        '                    <td>{{item.ab_createdate}}</td>\n' +
+        '                    <td style="text-align: center">{{item.ab_price}}</td>\n' +
+        '                    <td>{{item.ab_description}}</td>\n' +
+        '\n' +
+        '                    <td><button type="button" class="btn btn-danger" v-on:click="deleteArticle(item.id)">Delete Article</button></td>\n' +
+        '                    <td><button type="button" class="btn btn-primary" v-on:click="addToCart(item.id)">Add to Cart</button></td>\n' +
+        '                </tr>\n' +
+        '            </table>\n' +
+        '            <pagination class="pageArrow" :pages="parentpages" v-on:pageevent="queryDB"></pagination>\n' +
+        '        </div>',
     data: function() {
         return {
             parentpages: 5,
