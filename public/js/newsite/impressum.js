@@ -50,5 +50,8 @@ Vue.component('impressum', {
         '<p>Wir haben diese Datenschutzerklärung (Fassung 24.05.2020-321179911) verfasst, um Ihnen gemäß der Vorgaben der <a class="adsimple-321179911" href="https://eur-lex.europa.eu/legal-content/DE/ALL/?uri=celex%3A32016R0679&amp;tid=321179911" target="_blank" rel="noopener">Datenschutz-Grundverordnung (EU) 2016/679</a> zu erklären, welche Informationen wir sammeln, wie wir Daten verwenden und welche Entscheidungsmöglichkeiten Sie als Besucher dieser Webseite haben.</p>\n' +
         '<p>Leider liegt es in der Natur der Sache, dass diese Erklärungen sehr technisch klingen, wir haben uns bei der Erstellung jedoch bemüht die wichtigsten Dinge so einfach und klar wie möglich zu beschreiben.</p>\n' +
         '<p style="margin-top:15px;">Quelle: Erstellt mit dem <a title="Datenschutz Generator Deutschland" href="https://www.adsimple.de/datenschutz-generator/" target="_blank" rel="follow" style="text-decoration:none;">Datenschutz Generator</a> von AdSimple in Kooperation mit <a href="https://www.hashtagmann.de" target="_blank" rel="follow" title="">hashtagmann.de</a>\n' +
-        '</p></div>'
+        '<scroll-up :scroll-duration="2000" :scroll-y="100">Go to Top</scroll-up>' +
+        '</p></div>',
 });
+
+

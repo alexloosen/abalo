@@ -65197,21 +65197,22 @@ module.exports = function(module) {
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/*! exports provided: default */
+/*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_good_table__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-good-table */ "./node_modules/vue-good-table/dist/vue-good-table.esm.js");
-/* harmony import */ var vue_good_table_dist_vue_good_table_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-good-table/dist/vue-good-table.css */ "./node_modules/vue-good-table/dist/vue-good-table.css");
-/* harmony import */ var vue_good_table_dist_vue_good_table_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_good_table_dist_vue_good_table_css__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vue_scroll_up__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-scroll-up */ "./node_modules/vue-scroll-up/dist/vue-scroll-up.js");
-/* harmony import */ var vue_scroll_up__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_scroll_up__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue_scroll_up__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-scroll-up */ "./node_modules/vue-scroll-up/dist/vue-scroll-up.js");
+/* harmony import */ var vue_scroll_up__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_scroll_up__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_good_table_dist_vue_good_table_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-good-table/dist/vue-good-table.css */ "./node_modules/vue-good-table/dist/vue-good-table.css");
+/* harmony import */ var vue_good_table_dist_vue_good_table_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_good_table_dist_vue_good_table_css__WEBPACK_IMPORTED_MODULE_2__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+
  // import the styles
 
 
@@ -65220,6 +65221,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 Vue.use(vue_good_table__WEBPACK_IMPORTED_MODULE_0__["default"]);
+Vue.component('vue-scroll-up', __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module '/components/vue-scroll-up.vue'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()))["default"]);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -65227,14 +65229,7 @@ Vue.use(vue_good_table__WEBPACK_IMPORTED_MODULE_0__["default"]);
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'app',
-  components: {
-    ScrollUp: vue_scroll_up__WEBPACK_IMPORTED_MODULE_2___default.a
-  }
-}); // const files = require.context('./', true, /\.vue$/i)
+// const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
