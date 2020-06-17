@@ -33,6 +33,13 @@
     new Vue ({
         el: '#app'
     });
+
+
+    window.noHTML = function() {
+        console.log('Removing server message.');
+        let tmp = document.getElementById('message-box');
+        tmp.innerHTML = "";
+    };
 </script>
 
 </html>
