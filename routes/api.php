@@ -22,6 +22,11 @@ Route::get('articles','ArticleAPIController@get_count');
 Route::get('articlespage/{offset}', 'ArticleAPIController@get_all_page');
 Route::get('articles/{search}/{offset}', 'ArticleAPIController@searchArticlePage');
 Route::get('articles/{search}', 'ArticleAPIController@searchArticle');
+//m5 ->
+Route::get('creator/articles/{id}','ArticleAPIController@personal_articles');
+Route::post('/articles/{id}/sold','MessageAPIController@sold');
+Route::post('/articles/discount/{id}','MessageAPIController@discount');
+// <- m5
 Route::post('/articles','ArticleAPIController@create_api');
 Route::delete('/articles/{id}','ArticleAPIController@delete_api');
 

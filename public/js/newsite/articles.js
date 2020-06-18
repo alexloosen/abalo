@@ -1,39 +1,42 @@
 Vue.component('articles', {
-    template: '<div>\n' +
-        '            <input type="text" v-on:keyup="handleIt">\n' +
-        '            <table style="width:100%">\n' +
-        '                <tr>\n' +
-        '                    <th>Title</th>\n' +
-        '                    <th style="width:10%">Creator</th>\n' +
-        '                    <th>Created at</th>\n' +
-        '                    <th style="width:5%">Price</th>\n' +
-        '                    <th>Description</th>\n' +
-        '                </tr>\n' +
-        '                <tr v-for="item in objects">\n' +
-        '                    <td>{{item.ab_name}}</td>\n' +
-        '                    <td>{{item.ab_creator_id}}</td>\n' +
-        '                    <td>{{item.ab_createdate}}</td>\n' +
-        '                    <td style="text-align: center">{{item.ab_price}}</td>\n' +
-        '                    <td>{{item.ab_description}}</td>\n' +
-        '\n' +
-        '                    <td><button type="button" class="btn btn-danger" v-on:click="deleteArticle(item.id)">Delete Article</button></td>\n' +
-        '                    <td><button type="button" class="btn btn-primary" v-on:click="addToCart(item.id)">Add to Cart</button></td>\n' +
-        '                </tr>\n' +
-        '            </table>\n' +
-        '            <pagination class="pageArrow" :pages="parentpages" v-on:pageevent="queryDB"></pagination>\n' +
-        '        </div>',
     data: function() {
         return {
             parentpages: 5,
             objects: [],
             have_all_articles: false,
-            searchTerm: ""
+            searchTerm: "",
+            // alerts contains all discounted, shown articles
+            alerts: []
         }
     },
+    // create a socket which will react upon discount alert (id = 2)
     created: function(){
+        let serverUrl = 'ws://127.0.0.1:8001/demo';
+        let socket = new WebSocket(serverUrl);
+        socket.onopen = (msg) => {
+            console.log('Connected to check articles.');
+        };
+        socket.onmessage = (msg) => {
+            console.log('I received a message for articles.');
+            if(JSON.parse(JSON.parse(msg.data).data).id == 2){
+                console.log('And it was meant for me!');
+                let loc_id = JSON.parse(JSON.parse(msg.data).data).text;
+                for (var i = 0; i < this.objects.length; i++) {
+                    if(this.objects[i].id == loc_id){
+                        this.alerts.push({
+                            name: this.objects[i].ab_name
+                        });
+                    }
+                }
+            }
+        }
+        socket.onclose = (msg) => {
+            console.log('Disconnected from articles-socket.')
+        }
         var event = new Event('build');
         this.handleIt(event);
     },
+
     methods: {
         handleIt: function (event) {
             if(event.target != null)
@@ -41,26 +44,26 @@ Vue.component('articles', {
             const XHR = new XMLHttpRequest();
             if (this.searchTerm.length > 3 ) {
                 this.have_all_articles = false;
-                console.log('Trying to get count of searched articles.');
+                //console.log('Trying to get count of searched articles.');
                 XHR.open( "GET", '/api/articles/' + this.searchTerm );
                 XHR.onload = () => {
                     if(XHR.status === 200){
                         let result = XHR.response;
                         let tmp = JSON.parse(result).num[0].count;
                         this.parentpages = Math.ceil(tmp/5);
-                        console.log('In function for searched articles pages was:' + this.parentpages);
+                        //console.log('In function for searched articles pages was:' + this.parentpages);
                     }
                     else{
-                        console.log('Could not querry DB.');
+                        console.log('Could not query DB to show articles.');
                     }
                 }
                 XHR.send();
-                console.log('searchTerm is ' + this.searchTerm);
+                //console.log('searchTerm is ' + this.searchTerm);
                 this.queryDB(0);
             } else {
                 if(!this.have_all_articles){
                     this.have_all_articles = true;
-                    console.log('Trying to get count for all articles.');
+                    //console.log('Trying to get count for all articles.');
                     XHR.open( "GET", '/api/articles' );
                     XHR.onload = () => {
                         if(XHR.status === 200){
@@ -68,10 +71,10 @@ Vue.component('articles', {
                             let result = XHR.response;
                             let tmp = JSON.parse(result).num[0].count;
                             this.parentpages = Math.ceil(tmp/5);
-                            console.log('In function pages was:' + this.parentpages);
+                            //console.log('In function pages was:' + this.parentpages);
                         }
                         else{
-                            console.log('Could not querry DB.');
+                            console.log('Could not query DB to show articles.');
                         }
                     }
                     XHR.send();
@@ -83,10 +86,11 @@ Vue.component('articles', {
             if(this.searchTerm.length > 3){
                 // objects leeren, damit nicht die Ergebnisse mehrerer Suchanfragen aufgelistet werden
                 this.objects = [];
+                this.alerts = [];
                 // Set up our request
                 XHR.open("GET", '/api/articles/' + this.searchTerm + '/' + emitted);
                 let str_2 = 'Trying to get a page for [\'search_term\' => ' + this.searchTerm + ']';
-                console.log(str_2);
+                //console.log(str_2);
                 XHR.onload =  () => {
                     let result = XHR.response;
                     let objs = JSON.parse(result).data;
@@ -102,16 +106,17 @@ Vue.component('articles', {
                     }
                 }
                 XHR.send();
-                console.log(this.objects);
+                //console.log(this.objects);
             }
             else{
                 XHR = new XMLHttpRequest();
                 // objects leeren, damit nicht die Ergebnisse mehrerer Suchanfragen aufgelistet werden
                 this.objects = [];
+                this.alerts = [];
                 // Set up our request
                 XHR.open("GET", '/api/articlespage/' + emitted);
                 let str_2 = 'Trying to get page of all articles';
-                console.log(str_2);
+                //console.log(str_2);
                 XHR.onload =  () => {
                     let result = XHR.response;
                     let objs = JSON.parse(result).data;
@@ -127,7 +132,7 @@ Vue.component('articles', {
                     }
                 }
                 XHR.send();
-                console.log(this.objects);
+                //console.log(this.objects);
             }
         },
         deleteArticle: function (id){
@@ -144,8 +149,42 @@ Vue.component('articles', {
                 alert(event.target.responseText);
             } );
         },
-        addToCart: function (id) {
-            alert('I (' + id + ') would be added to the cart, if there was one.');
+        // sending a request to show sold-notification
+        sell: function (id) {
+            axios.post('/api/articles/' + id + '/sold')
+                .then(response => {
+                    console.log('axios send selling request.');
+                })
+                .catch(reason => {
+                    console.log('axios failed selling!');
+                    console.log(reason);
+                });
         }
-    }
+    },
+
+    template: '<div>' +
+        '<input type="text" v-on:keyup="handleIt">' +
+        '<table style="width:100%">' +
+        '<tr>' +
+        '<th>Title</th>' +
+        '<th style="width:10%">Creator</th>' +
+        '<th>Created at</th>' +
+        '<th style="width:5%">Price</th>' +
+        '<th>Description</th>' +
+        '</tr>' +
+        '<tr v-for="item in objects">' +
+        '<td>{{item.ab_name}}</td>' +
+        '<td>{{item.ab_creator_id}}</td>' +
+        '<td>{{item.ab_createdate}}</td>' +
+        '<td style="text-align: center">{{item.ab_price}}</td>' +
+        '<td>{{item.ab_description}}</td>' +
+        '<td><button type="button" class="btn btn-danger" v-on:click="deleteArticle(item.id)">Delete Article</button></td>' +
+        '<td><button type="button" class="btn btn-primary" v-on:click="sell(item.id)">Sell</button></td>' +
+        '</tr>' +
+        '</table>' +
+        '<p v-for="msg in alerts" style="background-color: aquamarine">' +
+        'Der Artikel {{msg.name}} wird nun günstiger angeboten! Greifen Sie schnell zu.' +
+        '</p>' +
+        '<pagination class="pageArrow" :pages="parentpages" v-on:pageevent="queryDB"></pagination>' +
+        '</div>',
 });

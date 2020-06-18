@@ -9,24 +9,32 @@ use Illuminate\Support\Facades\DB;
 
 class ArticleAPIController extends Controller
 {
-    // für die dynamische/interaktive Artikelsuche
+    // for m5 task 5, so certain articles can be discounted
+    public function personal_articles($id){
+        $result['data'] = DB::select('select ab_name, id from ab_article where ab_creator_id = ?', [$id]);
+        return response()->json($result);
+    }
+
+    // für die dynamische/interaktive Artikelsuche, gibt Anzahl gefundener Artikel zurück
     public function searchArticle($search)
     {
         $result ['num'] = DB::select('select count(*) from ab_article where ab_name ~* ?', [$search]);
         return response()->json($result);
     }
 
+    //gibt einen Teil der gesuchten Artikel zurück
     public function searchArticlePage($search, $offset){
         $result ['data'] = DB::select('select * from ab_article where ab_name ~* ? limit 5 offset ?;', [$search, $offset]);
         return response()->json($result);
     }
 
+    //gibt Anzahl ALLER Artikel zurück
     public function get_count(){
         $result ['num'] = DB::select('select count(*) from ab_article;');
         return response()->json($result);
     }
 
-    //zum Anzeigen ALLER Artikel
+    //zum Anzeigen einer Seite ALLER Artikel
     public function get_all_page($offset){
         $result ['data'] = DB::select('select * from ab_article limit 5 offset ?;', [$offset]);
         return response()->json($result);
