@@ -12,7 +12,13 @@ use function GuzzleHttp\Psr7\copy_to_string;
 
 class ArticleAPIController extends Controller
 {
-    // für die dynamische/interaktive Artikelsuche
+    // for m5 task 5, so certain articles can be discounted
+    public function personal_articles($id){
+        $result['data'] = DB::select('select ab_name, id from ab_article where ab_creator_id = ?', [$id]);
+        return response()->json($result);
+    }
+
+    // für die dynamische/interaktive Artikelsuche, gibt Anzahl gefundener Artikel zurück
     public function searchArticle($search)
     {
         Redis::rpush('lastarticlesearch', $search);
@@ -20,22 +26,27 @@ class ArticleAPIController extends Controller
         return response()->json($result);
     }
 
+<<<<<<< HEAD
     public function getLastSearchTerms(){
         $result = Redis::lrange('lastarticlesearch', 0, -1);
         return response()->json($result);
     }
 
+=======
+    //gibt einen Teil der gesuchten Artikel zurück
+>>>>>>> 36de0a485cf7c0ba8ce2110393f0b90fe22a031b
     public function searchArticlePage($search, $offset){
         $result ['data'] = DB::select('select * from ab_article where ab_name ~* ? limit 5 offset ?;', [$search, $offset]);
         return response()->json($result);
     }
 
+    //gibt Anzahl ALLER Artikel zurück
     public function get_count(){
         $result ['num'] = DB::select('select count(*) from ab_article;');
         return response()->json($result);
     }
 
-    //zum Anzeigen ALLER Artikel
+    //zum Anzeigen einer Seite ALLER Artikel
     public function get_all_page($offset){
         $result ['data'] = DB::select('select * from ab_article limit 5 offset ?;', [$offset]);
         return response()->json($result);

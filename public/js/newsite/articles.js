@@ -1,4 +1,5 @@
 Vue.component('articles', {
+<<<<<<< HEAD
 <<<<<<< .merge_file_a05544
     template: '<div>\n' +
         '            <a v-for="item in lastSearchTerms" title="item" v-on:click="setSearchTerm(item)"></a>\n\n' +
@@ -26,12 +27,15 @@ Vue.component('articles', {
         '        </div>',
 =======
 >>>>>>> .merge_file_a19960
+=======
+>>>>>>> 36de0a485cf7c0ba8ce2110393f0b90fe22a031b
     data: function() {
         return {
             parentpages: 5,
             objects: [],
             have_all_articles: false,
             searchTerm: "",
+<<<<<<< HEAD
 <<<<<<< .merge_file_a05544
             lastSearchTerm: "",
             lastSearchTerms: []
@@ -39,6 +43,10 @@ Vue.component('articles', {
             // alerts contains all discounted, shown articles
             alerts: []
 >>>>>>> .merge_file_a19960
+=======
+            // alerts contains all discounted, shown articles
+            alerts: []
+>>>>>>> 36de0a485cf7c0ba8ce2110393f0b90fe22a031b
         }
     },
     // create a socket which will react upon discount alert (id = 2)
@@ -104,12 +112,16 @@ Vue.component('articles', {
                         //console.log('In function for searched articles pages was:' + this.parentpages);
                     }
                     else{
+<<<<<<< HEAD
 <<<<<<< .merge_file_a05544
                         console.log(XHR.response);
                         console.log('Could not query DB.');
 =======
                         console.log('Could not query DB to show articles.');
 >>>>>>> .merge_file_a19960
+=======
+                        console.log('Could not query DB to show articles.');
+>>>>>>> 36de0a485cf7c0ba8ce2110393f0b90fe22a031b
                     }
                 }
                 XHR.send();
