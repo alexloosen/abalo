@@ -22,6 +22,7 @@ Route::get('articles','ArticleAPIController@get_count');
 Route::get('articlespage/{offset}', 'ArticleAPIController@get_all_page');
 Route::get('articles/{search}/{offset}', 'ArticleAPIController@searchArticlePage');
 Route::get('articles/{search}', 'ArticleAPIController@searchArticle');
+Route::get('getLastSearchTerms', 'ArticleAPIController@getLastSearchTerms');
 Route::post('/articles','ArticleAPIController@create_api');
 Route::delete('/articles/{id}','ArticleAPIController@delete_api');
 

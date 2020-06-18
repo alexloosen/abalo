@@ -65220,8 +65220,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-Vue.use(vue_good_table__WEBPACK_IMPORTED_MODULE_0__["default"]);
-Vue.component('vue-scroll-up', __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module '/components/vue-scroll-up.vue'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()))["default"]);
+Vue.use(vue_good_table__WEBPACK_IMPORTED_MODULE_0__["default"]); //Vue.component('vue-scroll-up', require('./components/vue-scroll-up.vue').default);
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -65238,10 +65238,9 @@ Vue.component('vue-scroll-up', __webpack_require__(!(function webpackMissingModu
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
-var app = new Vue({
-  el: '#app'
-});
+//const app = new Vue({
+//    el: '#app',
+//});
 
 /***/ }),
 

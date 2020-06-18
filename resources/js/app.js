@@ -14,7 +14,7 @@ window.Vue = require('vue');
 
 Vue.use(VueGoodTablePlugin);
 
-Vue.component('vue-scroll-up', require('./components/vue-scroll-up.vue').default);
+//Vue.component('vue-scroll-up', require('./components/vue-scroll-up.vue').default);
 
 /**
  * The following block of code may be used to automatically register your
@@ -35,6 +35,6 @@ Vue.component('vue-scroll-up', require('./components/vue-scroll-up.vue').default
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#app',
-});
+//const app = new Vue({
+//    el: '#app',
+//});

@@ -1,0 +1,28 @@
+set k1 "Das ist eine lange Zeichenkette."
+
+setrange k1 13 kurz
+get k1
+"Das ist eine kurze Zeichenkette."
+
+strlen k1
+(integer) 32
+getrange k1 19 -2
+"Zeichenkette"
+
+set pageviews:05:1 0
+rpush milestones 2
+rpush milestones 3
+rpush milestones 4
+rpush milestones 3
+lrange milestones 0 3
+1) "2"
+2) "3"
+3) "4"
+4) "3"
+
+incr pageviews:05:1
+
+incrby pageviews:05:1 42
+
+get pageviews:05:1
+"43"

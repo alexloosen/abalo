@@ -24,6 +24,10 @@
   background-color: #c93836;
 }
 
+.pageArrow {
+  cursor: pointer;
+}
+
 a {
   color: inherit;
 }
@@ -33,6 +37,7 @@ a:hover {
   font-style: normal !important;
   font-size: 17px;
   color: #08b1a9;
+  cursor: pointer;
 }
 
 table th {

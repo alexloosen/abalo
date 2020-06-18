@@ -1,6 +1,8 @@
 Vue.component('articles', {
     template: '<div>\n' +
-        '            <input type="text" v-on:keyup="handleIt">\n' +
+        '            <a v-for="item in lastSearchTerms" title="item" v-on:click="setSearchTerm(item)"></a>\n\n' +
+        '            <input v-if="lastSearchTerm" type="text" text="lastSearchTerm" v-on:keyup="handleIt">\n\n' +
+        '            <input v-else="lastSearchTerm" type="text" v-on:keyup="handleIt">\n\n' +
         '            <table style="width:100%">\n' +
         '                <tr>\n' +
         '                    <th>Title</th>\n' +
@@ -14,8 +16,7 @@ Vue.component('articles', {
         '                    <td>{{item.ab_creator_id}}</td>\n' +
         '                    <td>{{item.ab_createdate}}</td>\n' +
         '                    <td style="text-align: center">{{item.ab_price}}</td>\n' +
-        '                    <td>{{item.ab_description}}</td>\n' +
-        '\n' +
+        '                    <td>{{item.ab_description}}</td>\n\n' +
         '                    <td><button type="button" class="btn btn-danger" v-on:click="deleteArticle(item.id)">Delete Article</button></td>\n' +
         '                    <td><button type="button" class="btn btn-primary" v-on:click="addToCart(item.id)">Add to Cart</button></td>\n' +
         '                </tr>\n' +
@@ -27,7 +28,9 @@ Vue.component('articles', {
             parentpages: 5,
             objects: [],
             have_all_articles: false,
-            searchTerm: ""
+            searchTerm: "",
+            lastSearchTerm: "",
+            lastSearchTerms: []
         }
     },
     created: function(){
@@ -35,6 +38,24 @@ Vue.component('articles', {
         this.handleIt(event);
     },
     methods: {
+        setSearchTerm: function(event){
+            this.lastSearchTerm = event.target.value;
+            this.handleIt(event);
+        },
+        getLastSearchTerms: function(){
+            console.log('Trying to get last searchTerms.');
+            XHR.open( "GET", '/api/getLastSearchTerms');
+            XHR.onload = () => {
+                if (XHR.status === 200) {
+                    let result = XHR.response;
+                    this.lastSearchTerm = JSON.parse(result);
+                } else {
+                    console.log(XHR.response);
+                    console.log('Could not query redis.');
+                }
+            }
+            XHR.send();
+        },
         handleIt: function (event) {
             if(event.target != null)
                 this.searchTerm = event.target.value;
@@ -51,12 +72,14 @@ Vue.component('articles', {
                         console.log('In function for searched articles pages was:' + this.parentpages);
                     }
                     else{
-                        console.log('Could not querry DB.');
+                        console.log(XHR.response);
+                        console.log('Could not query DB.');
                     }
                 }
                 XHR.send();
                 console.log('searchTerm is ' + this.searchTerm);
                 this.queryDB(0);
+                this.getLastSearchTerms();
             } else {
                 if(!this.have_all_articles){
                     this.have_all_articles = true;

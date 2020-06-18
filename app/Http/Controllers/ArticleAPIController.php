@@ -6,13 +6,22 @@ use App\Http\Controllers\Controller;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
+use function GuzzleHttp\Psr7\copy_to_string;
+
 
 class ArticleAPIController extends Controller
 {
     // für die dynamische/interaktive Artikelsuche
     public function searchArticle($search)
     {
+        Redis::rpush('lastarticlesearch', $search);
         $result ['num'] = DB::select('select count(*) from ab_article where ab_name ~* ?', [$search]);
+        return response()->json($result);
+    }
+
+    public function getLastSearchTerms(){
+        $result = Redis::lrange('lastarticlesearch', 0, -1);
         return response()->json($result);
     }
 
