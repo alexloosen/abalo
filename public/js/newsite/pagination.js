@@ -5,7 +5,6 @@ Vue.component('pagination',{
             curPage: 1
         }
     },
-    template: '<div><span v-on:click="pageBack"><</span>{{curPage}}<span v-on:click="pageForward">></span></div>',
     methods: {
         pageBack: function () {
             if(this.curPage > 1){
@@ -19,5 +18,6 @@ Vue.component('pagination',{
                 this.$emit('pageevent', (this.curPage - 1)*5);
             }
         }
-    }
+    },
+    template: '<div><span v-on:click="pageBack"><</span>{{curPage}}<span v-on:click="pageForward">></span></div>',
 });

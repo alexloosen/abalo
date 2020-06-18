@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="/style.css">
     <link href="/fontawesome-free-5.11.2-web/css/all.css" rel="stylesheet">
 
-
 </head>
+
 <div id="app">
     <sitebody>
     </sitebody>
@@ -33,6 +33,12 @@
     new Vue ({
         el: '#app'
     });
+
+    window.noHTML = function() {
+        console.log('Removing server message.');
+        let tmp = document.getElementById('message-box');
+        tmp.innerHTML = "";
+    };
 </script>
 
 </html>
