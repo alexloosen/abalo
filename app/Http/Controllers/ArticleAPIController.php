@@ -26,15 +26,12 @@ class ArticleAPIController extends Controller
         return response()->json($result);
     }
 
-<<<<<<< HEAD
     public function getLastSearchTerms(){
         $result = Redis::lrange('lastarticlesearch', 0, -1);
         return response()->json($result);
     }
 
-=======
     //gibt einen Teil der gesuchten Artikel zurück
->>>>>>> 36de0a485cf7c0ba8ce2110393f0b90fe22a031b
     public function searchArticlePage($search, $offset){
         $result ['data'] = DB::select('select * from ab_article where ab_name ~* ? limit 5 offset ?;', [$search, $offset]);
         return response()->json($result);
