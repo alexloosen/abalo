@@ -21,7 +21,12 @@ class ArticleAPIController extends Controller
     // für die dynamische/interaktive Artikelsuche, gibt Anzahl gefundener Artikel zurück
     public function searchArticle($search)
     {
+        // lastarticlesearch holen
+        // auf $search prüfen
+        // dann pushen, oder nicht
         Redis::rpush('lastarticlesearch', $search);
+        // länge von lastarticlesearch holen
+        // löschen vom ersten falls mehr als 5
         $result ['num'] = DB::select('select count(*) from ab_article where ab_name ~* ?', [$search]);
         return response()->json($result);
     }

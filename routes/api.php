@@ -22,21 +22,12 @@ Route::get('articles','ArticleAPIController@get_count');
 Route::get('articlespage/{offset}', 'ArticleAPIController@get_all_page');
 Route::get('articles/{search}/{offset}', 'ArticleAPIController@searchArticlePage');
 Route::get('articles/{search}', 'ArticleAPIController@searchArticle');
-<<<<<<< HEAD
-<<<<<<< HEAD
 Route::get('getLastSearchTerms', 'ArticleAPIController@getLastSearchTerms');
-=======
-=======
->>>>>>> 36de0a485cf7c0ba8ce2110393f0b90fe22a031b
 //m5 ->
 Route::get('creator/articles/{id}','ArticleAPIController@personal_articles');
 Route::post('/articles/{id}/sold','MessageAPIController@sold');
 Route::post('/articles/discount/{id}','MessageAPIController@discount');
 // <- m5
-<<<<<<< HEAD
->>>>>>> 36de0a485cf7c0ba8ce2110393f0b90fe22a031b
-=======
->>>>>>> 36de0a485cf7c0ba8ce2110393f0b90fe22a031b
 Route::post('/articles','ArticleAPIController@create_api');
 Route::delete('/articles/{id}','ArticleAPIController@delete_api');
 

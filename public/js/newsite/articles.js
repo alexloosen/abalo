@@ -41,16 +41,20 @@ Vue.component('articles', {
 
     methods: {
         setSearchTerm: function(event){
-            this.lastSearchTerm = event.target.value;
+            console.log(event);
+            this.lastSearchTerm = event;
             this.handleIt(event);
         },
         getLastSearchTerms: function(){
+            let XHR = new XMLHttpRequest();
             console.log('Trying to get last searchTerms.');
             XHR.open( "GET", '/api/getLastSearchTerms');
             XHR.onload = () => {
                 if (XHR.status === 200) {
                     let result = XHR.response;
-                    this.lastSearchTerm = JSON.parse(result);
+                    this.lastSearchTerms = JSON.parse(result);
+                    //console.log(result);
+                    //console.log(JSON.parse(result));
                 } else {
                     console.log(XHR.response);
                     console.log('Could not query redis.');
@@ -59,9 +63,14 @@ Vue.component('articles', {
             XHR.send();
         },
         handleIt: function (event) {
-            if(event.target != null)
+//            if(event.target != null)
+//                this.searchTerm = event.target.value;
+            if (event.type == 'keyup')
                 this.searchTerm = event.target.value;
-            const XHR = new XMLHttpRequest();
+            else
+                if (event.type != 'build')
+                    this.searchTerm = event;
+            let XHR = new XMLHttpRequest();
             if (this.searchTerm.length > 3 ) {
                 this.have_all_articles = false;
                 //console.log('Trying to get count of searched articles.');
@@ -158,7 +167,7 @@ Vue.component('articles', {
             }
         },
         deleteArticle: function (id){
-            const XHR = new XMLHttpRequest();
+            let XHR = new XMLHttpRequest();
             // Set up our request
             XHR.open( "DELETE", '/api/articles/' + id );
             let str = 'Trying to send (delete) [\'id\' => ' + id + ']';
@@ -184,8 +193,8 @@ Vue.component('articles', {
         }
     },
     template: '<div>' +
-        '<a v-for="item in lastSearchTerms" title="item" v-on:click="setSearchTerm(item)"></a>\n\n' +
-        '<input v-if="lastSearchTerm" type="text" text="lastSearchTerm" v-on:keyup="handleIt">\n\n' +
+        '<a style="margin-right: 1em" v-for="item in lastSearchTerms" v-on:click="setSearchTerm(item)"">{{item}}</a><br/>\n' +
+        '<input v-if="lastSearchTerm" type="text" text="lastSearchTerm" v-on:keyup="handleIt">\n' +
         '<input v-else="lastSearchTerm" type="text" v-on:keyup="handleIt">\n\n' +
         '<table style="width:100%">' +
         '<tr>' +

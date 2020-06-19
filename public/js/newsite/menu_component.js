@@ -17,6 +17,6 @@ Vue.component('menu-component', {
         '<li><a v-on:click="goVerkaufen">Verkaufen</a></li>' +
         '<li><a href="#">Unternehmen</a>' +
         '<ul><a href="#">Philosophie</a></ul>' +
-        '<ul><a v-on:click="#">Karriere</a></ul></li></ul>' +
+        '<ul><a href="#">Karriere</a></ul></li></ul>' +
         '</div>'
 });
