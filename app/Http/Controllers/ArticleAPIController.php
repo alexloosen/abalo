@@ -7,11 +7,21 @@ use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
+use Predis\Command\ListPushHead;
 use function GuzzleHttp\Psr7\copy_to_string;
-
 
 class ArticleAPIController extends Controller
 {
+    public function log($route){
+        $date = date("j-m-Y");
+        $counter = Redis::smembers("requests:{$date}:{$route}");
+        $counter++;
+        Redis::sadd("requests::{$date}::{$route}", $counter);
+        //Redis::incr("requests::{$date}::{$route}");
+        //sadd($this->_user_namespace() . ":users", $this->user)
+        //Redis::sadd("Repository.Source::{$this->id}", $id);
+    }
+
     // for m5 task 5, so certain articles can be discounted
     public function personal_articles($id){
         $result['data'] = DB::select('select ab_name, id from ab_article where ab_creator_id = ?', [$id]);
@@ -21,13 +31,14 @@ class ArticleAPIController extends Controller
     // für die dynamische/interaktive Artikelsuche, gibt Anzahl gefundener Artikel zurück
     public function searchArticle($search)
     {
-        // lastarticlesearch holen
-        // auf $search prüfen
-        // dann pushen, oder nicht
+        // Suchbegriff löschen, falls vorhanden
+        Redis::lrem('lastarticlesearch', 1, $search);
+        // Suchbegriff pushen
         Redis::rpush('lastarticlesearch', $search);
-        // länge von lastarticlesearch holen
-        // löschen vom ersten falls mehr als 5
+        // Liste von links abschneiden, falls zu lang
+        Redis::ltrim('lastarticlesearch', -5, -1);
         $result ['num'] = DB::select('select count(*) from ab_article where ab_name ~* ?', [$search]);
+        this.log('/articles/');
         return response()->json($result);
     }
 
@@ -45,6 +56,7 @@ class ArticleAPIController extends Controller
     //gibt Anzahl ALLER Artikel zurück
     public function get_count(){
         $result ['num'] = DB::select('select count(*) from ab_article;');
+        log('/articles/');
         return response()->json($result);
     }
 
