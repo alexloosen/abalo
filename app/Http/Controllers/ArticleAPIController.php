@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
 use Predis\Command\ListPushHead;
@@ -12,7 +13,7 @@ use function GuzzleHttp\Psr7\copy_to_string;
 
 class ArticleAPIController extends Controller
 {
-    public function log($route){
+    /*public function log($route){
         $date = date("j-m-Y");
         $counter = Redis::smembers("requests:{$date}:{$route}");
         $counter++;
@@ -20,7 +21,7 @@ class ArticleAPIController extends Controller
         //Redis::incr("requests::{$date}::{$route}");
         //sadd($this->_user_namespace() . ":users", $this->user)
         //Redis::sadd("Repository.Source::{$this->id}", $id);
-    }
+    }*/
 
     // for m5 task 5, so certain articles can be discounted
     public function personal_articles($id){
@@ -38,7 +39,7 @@ class ArticleAPIController extends Controller
         // Liste von links abschneiden, falls zu lang
         Redis::ltrim('lastarticlesearch', -5, -1);
         $result ['num'] = DB::select('select count(*) from ab_article where ab_name ~* ?', [$search]);
-        this.log('/articles/');
+        //ArticleAPIController::log('/articles/');
         return response()->json($result);
     }
 
@@ -56,7 +57,7 @@ class ArticleAPIController extends Controller
     //gibt Anzahl ALLER Artikel zurück
     public function get_count(){
         $result ['num'] = DB::select('select count(*) from ab_article;');
-        log('/articles/');
+        //ArticleApiConttroller::log('/articles/');
         return response()->json($result);
     }
 

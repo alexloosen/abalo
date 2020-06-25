@@ -84,7 +84,7 @@ Vue.component('articles', {
                     }
                     else{
                         console.log(XHR.response);
-                        console.log('Could not query DB to show articles.');
+                        console.log('Could not query DB to show articles that were found.');
                     }
                 }
                 XHR.send();
@@ -105,7 +105,7 @@ Vue.component('articles', {
                             //console.log('In function pages was:' + this.parentpages);
                         }
                         else{
-                            console.log('Could not query DB to show articles.');
+                            console.log('Could not query DB to show all articles.');
                         }
                     }
                     XHR.send();
